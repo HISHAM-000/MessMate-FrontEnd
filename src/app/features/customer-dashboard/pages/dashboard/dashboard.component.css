@@ -1,0 +1,10 @@
+.grid {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    flex: 1;
+    background: white;
+    padding: 15px;
+}

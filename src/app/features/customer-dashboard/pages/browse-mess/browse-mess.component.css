@@ -1,0 +1,30 @@
+.layout {
+    display: flex;
+    gap: 20px;
+}
+
+.sidebar {
+    width: 25%;
+    background: white;
+    padding: 15px;
+}
+
+.content {
+    flex: 1;
+}
+
+.card {
+    background: white;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.plan {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.day {
+    margin-bottom: 15px;
+}

@@ -1,0 +1,17 @@
+.recent-orders {
+  background: white;
+  padding: 15px;
+  border: 1px solid #ddd;
+}
+
+.recent-orders table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recent-orders th,
+.recent-orders td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}

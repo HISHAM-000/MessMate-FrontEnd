@@ -1,0 +1,67 @@
+<div class="min-h-screen grid lg:grid-cols-2 bg-gray-50">
+  <!-- Left Panel: Branding & Visuals (Hidden on smaller screens) -->
+  <div class="hidden lg:flex flex-col justify-between items-start bg-primary-50 p-12 lg:p-20 relative overflow-hidden">
+    <!-- Decorative Circle -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-primary-100 rounded-full mix-blend-multiply filter blur-2xl opacity-70"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-secondary-500 rounded-full mix-blend-multiply filter blur-2xl opacity-20"></div>
+
+    <div class="relative z-10 w-full">
+      <div class="flex items-center gap-3 text-primary-500 mb-10">
+        <!-- Fork and Spoon Icon (MessMate Logo) -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11V4a2 2 0 00-2-2 2 2 0 00-2 2v7h6zM13 3h3a2 2 0 012 2v6a2 2 0 01-1.34 1.886l-2.003.668C14.15 13.718 14 14.339 14 15v6" />
+        </svg>
+        <h1 class="text-3xl font-extrabold tracking-tight text-gray-900">MessMate</h1>
+      </div>
+      <h2 class="text-4xl font-bold text-gray-900 leading-tight">
+        Manage your mess <br> <span class="text-primary-500">seamlessly.</span>
+      </h2>
+      <p class="mt-4 text-lg text-gray-600 max-w-md">
+        Join the best platform to subscribe to daily meals and manage food services efficiently.
+      </p>
+    </div>
+
+    <!-- UI Mockup Graphic -->
+    <div class="relative z-10 w-full max-w-sm mt-12 bg-white/60 backdrop-blur-md rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 transform hover:-translate-y-1 transition-transform duration-500">
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center text-primary-500">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+        </div>
+        <div>
+          <div class="h-4 w-28 bg-gray-200 rounded mb-2"></div>
+          <div class="h-3 w-16 bg-gray-200 rounded"></div>
+        </div>
+        <div class="ml-auto w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-500">
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <div class="h-3 w-full bg-gray-200 rounded"></div>
+        <div class="h-3 w-4/5 bg-gray-200 rounded"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel: Auth Forms (Card layout on mobile) -->
+  <div class="flex items-center justify-center p-4 sm:p-6 lg:p-12 relative z-10 w-full overflow-y-auto min-h-screen lg:min-h-0">
+    <!-- Mobile background shapes -->
+    <div class="lg:hidden absolute inset-0 -z-10 bg-gray-50 overflow-hidden">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-primary-100/50 rounded-full filter blur-3xl transform translate-x-1/2 -translate-y-1/4"></div>
+    </div>
+
+    <!-- Centered Card Form Wrapper -->
+    <div class="w-full max-w-md bg-white rounded-[2rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] border border-gray-100 p-8 sm:p-10 transition-all mt-4 mb-4">
+      
+      <!-- Mobile Logo -->
+      <div class="flex lg:hidden items-center justify-center gap-2 text-primary-500 mb-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11V4a2 2 0 00-2-2 2 2 0 00-2 2v7h6zM13 3h3a2 2 0 012 2v6a2 2 0 01-1.34 1.886l-2.003.668C14.15 13.718 14 14.339 14 15v6" />
+        </svg>
+        <span class="text-2xl font-bold text-gray-900">MessMate</span>
+      </div>
+
+      <!-- Router Outlet for Login/Register -->
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
