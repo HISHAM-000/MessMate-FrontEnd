@@ -1,0 +1,64 @@
+<div *ngIf="!isLoading">
+
+  <!-- NO MENU -->
+  <div *ngIf="!menuId">
+    <button class="primary-btn" (click)="createMenu()">
+      Create Menu
+    </button>
+  </div>
+
+  <!-- MENU EXISTS -->
+  <div *ngIf="menuId">
+
+    <h3>Breakfast</h3>
+    <button (click)="openAdd(0)">+ Add</button>
+    <div *ngFor="let item of breakfast">
+      {{ item.name }}
+      <button (click)="openEdit(item)">Edit</button>
+      <button (click)="deleteItem(item.id)">Delete</button>
+    </div>
+
+    <h3>Lunch</h3>
+    <button (click)="openAdd(1)">+ Add</button>
+    <div *ngFor="let item of lunch">
+      {{ item.name }}
+      <button (click)="openEdit(item)">Edit</button>
+      <button (click)="deleteItem(item.id)">Delete</button>
+    </div>
+
+    <h3>Dinner</h3>
+    <button (click)="openAdd(2)">+ Add</button>
+    <div *ngFor="let item of dinner">
+      {{ item.name }}
+      <button (click)="openEdit(item)">Edit</button>
+      <button (click)="deleteItem(item.id)">Delete</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SIMPLE MODAL -->
+<div *ngIf="showModal" class="modal">
+  <div class="modal-content">
+
+    <h3>{{ isEdit ? 'Edit Item' : 'Add Item' }}</h3>
+
+    <input [(ngModel)]="form.name" placeholder="Name" />
+    <input [(ngModel)]="form.description" placeholder="Description" />
+
+    <label>
+      Veg:
+      <input type="checkbox" [(ngModel)]="form.isVeg" />
+    </label>
+
+    <label>
+      Available:
+      <input type="checkbox" [(ngModel)]="form.isAvailable" />
+    </label>
+
+    <button (click)="saveItem()">Save</button>
+    <button (click)="showModal = false">Cancel</button>
+
+  </div>
+</div>

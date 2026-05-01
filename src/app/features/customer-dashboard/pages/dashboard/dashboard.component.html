@@ -1,24 +1,133 @@
-<div class="page">
+<div class="p-8 max-w-7xl mx-auto">
+  
+  <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div>
+      <h1 class="text-3xl font-extrabold text-gray-900">Welcome back, John! 👋</h1>
+      <p class="text-gray-500 mt-1">Here is what's happening with your meals today.</p>
+    </div>
+    <a routerLink="../browse-mess" class="bg-gray-900 hover:bg-orange-500 text-white px-5 py-2.5 rounded-xl font-bold shadow-md transition-colors inline-flex items-center self-start">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      Explore Messes
+    </a>
+  </div>
 
-    <h2>Dashboard</h2>
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    
+    <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex items-center gap-4 relative overflow-hidden group">
+      <div class="absolute -right-4 -top-4 bg-orange-50 w-24 h-24 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
+      <div class="h-14 w-14 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center relative z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+        </svg>
+      </div>
+      <div class="relative z-10">
+        <p class="text-sm font-semibold text-gray-500">Active Plan</p>
+        <p class="text-xl font-black text-gray-900">{{ subscription?.planName || 'None' }}</p>
+      </div>
+    </div>
 
-    <div class="grid">
+    <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex items-center gap-4 relative overflow-hidden group">
+      <div class="absolute -right-4 -top-4 bg-blue-50 w-24 h-24 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
+      <div class="h-14 w-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center relative z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <div class="relative z-10">
+        <p class="text-sm font-semibold text-gray-500">Days Remaining</p>
+        <p class="text-2xl font-black text-gray-900">12 Days</p>
+      </div>
+    </div>
 
-        <div class="card">
-            <h3>Active Plan</h3>
-            <p>Premium</p>
+    <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex items-center gap-4 relative overflow-hidden group">
+      <div class="absolute -right-4 -top-4 bg-green-50 w-24 h-24 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
+      <div class="h-14 w-14 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center relative z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <div class="relative z-10">
+        <p class="text-sm font-semibold text-gray-500">Meals Delivered</p>
+        <p class="text-2xl font-black text-gray-900">24 Meals</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <!-- Today's Menu Highlight -->
+    <div class="lg:col-span-2">
+      <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 h-full">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-gray-900">Today's Menu</h2>
+          <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Freshly Prepared</span>
         </div>
-
-        <div class="card">
-            <h3>Meals Left</h3>
-            <p>12</p>
+        
+        <div *ngIf="menu && menu.length > 0; else noMenu">
+           <ul class="space-y-4">
+              <li *ngFor="let item of menu" class="flex items-center p-4 bg-gray-50 rounded-2xl">
+                <div class="h-10 w-10 rounded-full bg-orange-100 flex items-center justify-center mr-4">
+                  <span class="text-lg">🍲</span>
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-bold text-gray-800">{{ item.name }}</h4>
+                </div>
+              </li>
+           </ul>
         </div>
+        <ng-template #noMenu>
+           <div class="py-12 flex flex-col items-center justify-center text-center bg-gray-50 rounded-2xl border border-dashed border-gray-300">
+             <div class="h-16 w-16 bg-gray-200 rounded-full flex items-center justify-center mb-4">
+                <span class="text-2xl">🍽️</span>
+             </div>
+             <p class="text-gray-500 font-medium">No menu available for today.</p>
+             <p class="text-sm text-gray-400 mt-1">Make sure you have an active subscription.</p>
+           </div>
+        </ng-template>
 
-        <div class="card">
-            <h3>Today's Meal</h3>
-            <p>Rice & Curry</p>
+      </div>
+    </div>
+
+    <!-- Quick Actions / Mini summary -->
+    <div class="lg:col-span-1 space-y-8">
+      
+      <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl shadow-lg p-8 text-white relative overflow-hidden">
+        <div class="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white opacity-10"></div>
+        <h3 class="text-xl font-bold mb-2">Going Out?</h3>
+        <p class="text-gray-300 text-sm mb-6">Don't let your food go to waste. Skip your upcoming meal easily.</p>
+        <button routerLink="../subscription" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-md">
+          Skip a Meal
+        </button>
+      </div>
+
+      <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
+        <h3 class="font-bold text-gray-900 mb-4">Recent Orders</h3>
+        <div class="space-y-4">
+          <div *ngFor="let order of orders | slice:0:3" class="flex items-center justify-between pb-4 border-b border-gray-50 last:border-0 last:pb-0">
+            <div>
+              <p class="font-semibold text-gray-800 text-sm">#{{ order.id }}</p>
+              <p class="text-xs text-gray-500">{{ order.date | date:'shortDate' }}</p>
+            </div>
+            <div class="text-right">
+              <p class="font-bold text-gray-900 text-sm">₹{{ order.totalAmount }}</p>
+              <p class="text-xs text-green-600 font-semibold">{{ order.status }}</p>
+            </div>
+          </div>
+          <div *ngIf="orders.length === 0" class="text-sm text-gray-500 text-center py-4">
+            No recent orders.
+          </div>
         </div>
+        <button routerLink="../orders" class="w-full mt-4 py-2 text-sm font-bold text-orange-600 hover:text-orange-700 bg-orange-50 rounded-lg transition-colors">
+          View All Orders
+        </button>
+      </div>
 
     </div>
+
+  </div>
 
 </div>

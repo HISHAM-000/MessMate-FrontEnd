@@ -1,0 +1,66 @@
+<div class="page">
+
+  <div class="page-header">
+    <h1>Update Mess</h1>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading">
+    Loading...
+  </div>
+
+  <!-- Form -->
+  <div *ngIf="!isLoading" class="form-card">
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label>Mess Name</label>
+        <input [(ngModel)]="form.name" name="name" />
+      </div>
+
+      <div class="field">
+        <label>City</label>
+        <input [(ngModel)]="form.city" name="city" />
+      </div>
+
+      <div class="field">
+        <label>State</label>
+        <input [(ngModel)]="form.state" name="state" />
+      </div>
+
+      <div class="field">
+        <label>Postal Code</label>
+        <input [(ngModel)]="form.postalCode" name="postalCode"  />
+      </div>
+
+      <div class="field full">
+        <label>Address</label>
+        <input [(ngModel)]="form.addressLine" name="addressLine"/>
+      </div>
+
+      <div class="field full">
+        <label>Description</label>
+        <textarea [(ngModel)]="form.description" name="description"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Latitude</label>
+        <input type="number" [(ngModel)]="form.latitude" name="latitude" />
+      </div>
+
+      <div class="field">
+        <label>Longitude</label>
+        <input type="number" [(ngModel)]="form.longitude" name="longitude"/>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button class="secondary-btn" (click)="cancel()">Cancel</button>
+      <button class="primary-btn" (click)="save()">Update Mess</button>
+    </div>
+
+  </div>
+
+</div>

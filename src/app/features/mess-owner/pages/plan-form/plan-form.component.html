@@ -1,0 +1,132 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>Create / Update Plan</h1>
+      <p>Manage pricing and plan details</p>
+    </div>
+  </div>
+
+  <form #planForm="ngForm" class="form-card">
+
+    <div class="form-grid">
+
+      <!-- Plan Name -->
+      <div class="field">
+        <label>Plan Name</label>
+        <input 
+          type="text"
+          name="name"
+          [(ngModel)]="plan.name"
+          #name="ngModel"
+          required
+        />
+        <small class="error" *ngIf="name.invalid && name.touched">
+          Plan name is required
+        </small>
+      </div>
+
+      <!-- Plan Type -->
+      <div class="field">
+        <label>Plan Type</label>
+        <select 
+          name="planType"
+          [(ngModel)]="plan.planType"
+          #planType="ngModel"
+          required
+        >
+          <option [value]="1">Weekly</option>
+          <option [value]="2">Monthly</option>
+        </select>
+      </div>
+
+      <!-- Min Active Days -->
+      <div class="field">
+        <label>Min Active Days</label>
+        <input 
+          type="number"
+          name="minActiveDays"
+          [(ngModel)]="plan.minActiveDays"
+          #minDays="ngModel"
+          required
+          min="1"
+        />
+        <small class="error" *ngIf="minDays.invalid && minDays.touched">
+          Must be at least 1
+        </small>
+      </div>
+
+      <!-- Price -->
+      <div class="field">
+        <label>Price</label>
+        <input 
+          type="number"
+          name="price"
+          [(ngModel)]="plan.price"
+          #price="ngModel"
+          required
+          min="1"
+        />
+        <small class="error" *ngIf="price.invalid && price.touched">
+          Price must be greater than 0
+        </small>
+      </div>
+
+      <!-- Meal Availability -->
+      <div class="field full">
+        <label>Meal Availability</label>
+
+        <div class="checkbox-group">
+
+          <label class="checkbox-item">
+            <input 
+              type="checkbox"
+              name="isBreakfast"
+              [(ngModel)]="plan.isBreakfast"
+            />
+            Breakfast
+          </label>
+
+          <label class="checkbox-item">
+            <input 
+              type="checkbox"
+              name="isLunch"
+              [(ngModel)]="plan.isLunch"
+            />
+            Lunch
+          </label>
+
+          <label class="checkbox-item">
+            <input 
+              type="checkbox"
+              name="isDinner"
+              [(ngModel)]="plan.isDinner"
+            />
+            Dinner
+          </label>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button 
+        type="button"
+        class="secondary-btn"
+        routerLink="/owner/plans"
+      >
+        Cancel
+      </button>
+
+      <button 
+        type="button"
+        class="primary-btn"
+        [disabled]="planForm.invalid"
+        (click)="savePlan(planForm)"
+      >
+        Save Plan
+      </button>
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,37 @@
+<div class="page">
+
+  <div class="page-header">
+    <h1>Resubmit Application</h1>
+    <p>Update your details and submit again</p>
+  </div>
+
+  <div class="panel">
+
+    <label>Name</label>
+    <input [(ngModel)]="form.name" placeholder="Enter your name" />
+
+    <label>Email</label>
+    <input [(ngModel)]="form.email" placeholder="Enter your email" />
+
+    <label>Phone Number</label>
+    <input [(ngModel)]="form.phoneNumber" placeholder="Enter phone number" />
+
+    <label>Authorized Person Name</label>
+    <input [(ngModel)]="form.authorizedName" placeholder="Authorized person name" />
+
+    <label>License Number</label>
+    <input [(ngModel)]="form.licenseNumber" placeholder="License number" />
+
+    <div class="actions">
+      <button 
+        class="primary-btn" 
+        (click)="submit()" 
+        [disabled]="isLoading"
+      >
+        {{ isLoading ? 'Submitting...' : 'Submit Again' }}
+      </button>
+    </div>
+
+  </div>
+
+</div>

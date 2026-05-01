@@ -1,60 +1,33 @@
-<div class="page">
+<div class="p-8">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800">Browse Messes</h1>
+    <p class="text-gray-500 mt-2">Discover and subscribe to the best messes around you.</p>
+  </div>
 
-    <h2>Browse Mess</h2>
-
-    <div class="layout">
-
-        <!-- LEFT: Mess List -->
-        <div class="sidebar">
-            <h3>Messes</h3>
-            <ul>
-                <li>Kerala Mess</li>
-                <li>Healthy Mess</li>
-                <li>Veg Meals</li>
-            </ul>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div *ngFor="let mess of messes" class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden cursor-pointer flex flex-col group" (click)="viewMess(mess.id)">
+      <div class="relative h-48 overflow-hidden">
+        <img [src]="mess.imageUrl" alt="{{ mess.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold flex items-center text-orange-600 shadow">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+          {{ mess.rating }}
         </div>
-
-        <!-- RIGHT: Details -->
-        <div class="content">
-
-            <!-- Plans -->
-            <div class="card">
-                <h3>Available Plans</h3>
-
-                <div class="plan">
-                    <p>Basic Plan</p>
-                    <button>View Meals</button>
-                    <button>Enroll</button>
-                </div>
-
-                <div class="plan">
-                    <p>Premium Plan</p>
-                    <button>View Meals</button>
-                    <button>Enroll</button>
-                </div>
-            </div>
-
-            <!-- Meals -->
-            <div class="card">
-                <h3>Meals (Day Wise)</h3>
-
-                <div class="day">
-                    <h4>Monday</h4>
-                    <p>Breakfast: Idli</p>
-                    <p>Lunch: Rice</p>
-                    <p>Dinner: Chapati</p>
-                </div>
-
-                <div class="day">
-                    <h4>Tuesday</h4>
-                    <p>Breakfast: Dosa</p>
-                    <p>Lunch: Meals</p>
-                    <p>Dinner: Parotta</p>
-                </div>
-            </div>
-
+      </div>
+      
+      <div class="p-6 flex-1 flex flex-col">
+        <h3 class="text-xl font-bold text-gray-900 mb-2">{{ mess.name }}</h3>
+        <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ mess.description }}</p>
+        
+        <div class="mt-auto flex items-center text-gray-500 text-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span class="truncate">{{ mess.address }}</span>
         </div>
-
+      </div>
     </div>
-
+  </div>
 </div>

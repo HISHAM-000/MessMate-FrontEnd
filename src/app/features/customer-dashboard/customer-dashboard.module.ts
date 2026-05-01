@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { CustomerDashboardRoutingModule } from './customer-dashboard-routing.module';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -15,6 +16,8 @@ import { TodayMealComponent } from './components/today-meal/today-meal.component
 import { RecentOrderComponent } from './components/recent-order/recent-order.component';
 import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
 import { BrowseMessComponent } from './pages/browse-mess/browse-mess.component';
+import { MessDetailComponent } from './pages/mess-detail/mess-detail.component';
+import { PlanDetailComponent } from './pages/plan-detail/plan-detail.component';
 
 
 @NgModule({
@@ -31,11 +34,14 @@ import { BrowseMessComponent } from './pages/browse-mess/browse-mess.component';
     TodayMealComponent,
     RecentOrderComponent,
     CustomerDashboardComponent,
-    BrowseMessComponent
+    BrowseMessComponent,
+    MessDetailComponent,
+    PlanDetailComponent
   ],
   imports: [
     CommonModule,
-    CustomerDashboardRoutingModule
+    CustomerDashboardRoutingModule,
+    FormsModule
   ]
 })
 export class CustomerDashboardModule { }

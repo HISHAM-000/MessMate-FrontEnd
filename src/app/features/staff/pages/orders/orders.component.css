@@ -1,0 +1,37 @@
+.section {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+}
+
+.row.header {
+  font-weight: bold;
+  border-bottom: 2px solid #ccc;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+select {
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 5px 10px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}

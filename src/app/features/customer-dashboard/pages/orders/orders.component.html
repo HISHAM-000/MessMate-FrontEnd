@@ -1,27 +1,55 @@
-<div class="page">
+<div class="p-8 max-w-6xl mx-auto">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800">My Orders</h1>
+    <p class="text-gray-500 mt-2">View your past orders, invoices, and transaction history.</p>
+  </div>
 
-    <h2>My Orders</h2>
-
-    <div class="card">
-        <table>
-            <tr>
-                <th>Date</th>
-                <th>Meal</th>
-                <th>Status</th>
-            </tr>
-
-            <tr>
-                <td>25 Apr</td>
-                <td>Lunch</td>
-                <td>Delivered</td>
-            </tr>
-
-            <tr>
-                <td>24 Apr</td>
-                <td>Dinner</td>
-                <td>Skipped</td>
-            </tr>
-        </table>
+  <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-gray-50 border-b border-gray-100">
+            <th class="py-4 px-6 font-semibold text-gray-600">Order ID</th>
+            <th class="py-4 px-6 font-semibold text-gray-600">Date</th>
+            <th class="py-4 px-6 font-semibold text-gray-600">Items</th>
+            <th class="py-4 px-6 font-semibold text-gray-600">Amount</th>
+            <th class="py-4 px-6 font-semibold text-gray-600">Status</th>
+            <th class="py-4 px-6 font-semibold text-gray-600 text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders" class="border-b border-gray-50 hover:bg-orange-50/50 transition-colors">
+            <td class="py-4 px-6 text-gray-800 font-medium">#{{ order.id }}</td>
+            <td class="py-4 px-6 text-gray-500">{{ order.date | date:'mediumDate' }}</td>
+            <td class="py-4 px-6 text-gray-600 text-sm">
+              <ul class="list-disc list-inside">
+                <li *ngFor="let item of order.items">{{ item }}</li>
+              </ul>
+            </td>
+            <td class="py-4 px-6 font-bold text-gray-900">₹{{ order.totalAmount }}</td>
+            <td class="py-4 px-6">
+              <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider"
+                    [ngClass]="{
+                      'bg-green-100 text-green-700': order.status === 'Completed',
+                      'bg-yellow-100 text-yellow-700': order.status === 'Pending',
+                      'bg-red-100 text-red-700': order.status === 'Failed'
+                    }">
+                {{ order.status }}
+              </span>
+            </td>
+            <td class="py-4 px-6 text-right">
+              <button class="text-orange-600 hover:text-orange-800 font-semibold text-sm transition-colors">
+                View Invoice
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="orders.length === 0">
+            <td colspan="6" class="py-12 text-center text-gray-500 italic">
+              No orders found.
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
+  </div>
 </div>

@@ -1,0 +1,11 @@
+<div class="page">
+  <h1>Weekly Menu</h1>
+
+  <div class="week-tabs">
+    <button *ngFor="let day of days"
+            [routerLink]="['/owner/menu-day', day]"
+            routerLinkActive="active">
+      {{ day }}
+    </button>
+  </div>
+</div>

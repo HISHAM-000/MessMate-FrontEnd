@@ -1,0 +1,84 @@
+<div class="page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <h1>Staff Management</h1>
+      <p>Manage staff and assign deliveries</p>
+    </div>
+
+    <button class="primary-btn" (click)="openAddModal()">+ Add Staff</button>
+  </div>
+
+  <!-- Staff List -->
+  <div class="panel">
+    <div class="staff-list">
+
+      <div class="staff-row" *ngFor="let staff of staffs">
+        <div class="staff-info">
+          <h3>{{ staff.name }}</h3>
+          <p>{{ staff.role }}</p>
+        </div>
+
+        <div class="actions">
+          <button class="secondary-btn" (click)="openAssignModal(staff.id)">
+            Assign
+          </button>
+
+          <button class="danger-btn" (click)="openDeleteModal(staff.id)">
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="staffs.length === 0" class="empty">
+        No staff available
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ADD STAFF MODAL -->
+<div class="modal-backdrop" *ngIf="showAddModal">
+  <div class="modal">
+    <h2>Add Staff</h2>
+
+    <input [(ngModel)]="newStaff.name" placeholder="Name" />
+    <input [(ngModel)]="newStaff.email" placeholder="Email" />
+    <input [(ngModel)]="newStaff.phoneNumber" placeholder="Phone Number" />
+    <input [(ngModel)]="newStaff.password" placeholder="Password" type="password" />
+
+    <div class="modal-actions">
+      <button class="primary-btn" (click)="confirmAdd()">Add</button>
+      <button class="cancel-btn" (click)="closeAddModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ASSIGN MODAL -->
+<div class="modal-backdrop" *ngIf="showAssignModal">
+  <div class="modal">
+    <h2>Assign Delivery</h2>
+
+    <input type="number" [(ngModel)]="orderId" placeholder="Order ID" />
+
+    <div class="modal-actions">
+      <button class="primary-btn" (click)="confirmAssign()">Assign</button>
+      <button class="cancel-btn" (click)="closeAssignModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal-backdrop" *ngIf="showDeleteModal">
+  <div class="modal">
+    <h2>Confirm Delete</h2>
+    <p>Are you sure?</p>
+
+    <div class="modal-actions">
+      <button class="danger-btn" (click)="confirmDelete()">Delete</button>
+      <button class="cancel-btn" (click)="closeDeleteModal()">Cancel</button>
+    </div>
+  </div>
+</div>

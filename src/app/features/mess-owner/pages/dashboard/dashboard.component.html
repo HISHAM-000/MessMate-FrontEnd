@@ -1,0 +1,50 @@
+<div *ngIf="!isLoading">
+
+  <!-- KPI CARDS -->
+  <div class="cards-grid">
+
+    <div class="card">
+      <h3>Total Orders</h3>
+      <p>{{ stats.totalOrders }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Today's Meals</h3>
+      <p>{{ stats.todayMeals }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Revenue Today</h3>
+      <p>₹{{ stats.revenue }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Delivered</h3>
+      <p>{{ stats.deliveredOrders }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Active Plans</h3>
+      <p>{{ stats.activePlans }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Staff Count</h3>
+      <p>{{ stats.staffCount }}</p>
+    </div>
+
+  </div>
+
+  <!-- TODAY ORDERS -->
+  <div class="panel">
+    <h2>Today’s Orders</h2>
+
+    <div *ngFor="let order of todayOrders" class="order-row">
+      <span>#{{ order.id }}</span>
+      <span>{{ order.customerName }}</span>
+      <span>₹{{ order.amount }}</span>
+      <span>{{ order.status }}</span>
+    </div>
+  </div>
+
+</div>

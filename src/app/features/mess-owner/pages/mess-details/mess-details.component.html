@@ -1,0 +1,79 @@
+<div class="details-grid" *ngIf="!isLoading && mess">
+
+  <div class="panel">
+    <h2>Basic Info</h2>
+
+    <div class="info-row">
+      <span>Name</span>
+      <strong>{{ mess.name }}</strong>
+    </div>
+
+    <div class="info-row">
+      <span>Description</span>
+      <strong>{{ mess.description }}</strong>
+    </div>
+
+    <div class="info-row">
+      <span>Location</span>
+      <strong>{{ mess.city }}, {{ mess.state }}</strong>
+    </div>
+
+    <div class="info-row">
+      <span>Address</span>
+      <strong>{{ mess.addressLine }}</strong>
+    </div>
+
+    <div class="info-row">
+      <span>Postal Code</span>
+      <strong>{{ mess.postalCode }}</strong>
+    </div>
+
+    <div class="info-row">
+      <span>Rating</span>
+      <strong>{{ mess.rating }}</strong>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Actions</h2>
+    <div class="action-list">
+      <a class="secondary-btn" routerLink="/owner/mess-form">
+  Edit Mess
+</a>
+      <button class="danger-btn" (click)="openModal()">
+  Delete Mess
+</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Loading -->
+<div *ngIf="isLoading">
+  Loading mess details...
+</div>
+
+<!-- No Data -->
+<div *ngIf="!isLoading && !mess">
+  No mess found. Please create one.
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal-backdrop" *ngIf="showDeleteModal">
+  <div class="modal">
+
+    <h2>Delete Mess</h2>
+    <p>Are you sure you want to delete this mess?</p>
+
+    <div class="modal-actions">
+      <button class="secondary-btn" (click)="closeModal()">
+        Cancel
+      </button>
+
+      <button class="danger-btn" (click)="confirmDelete()">
+        Delete
+      </button>
+    </div>
+
+  </div>
+</div>

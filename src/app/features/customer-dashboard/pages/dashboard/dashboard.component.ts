@@ -36,10 +36,12 @@ export class DashboardComponent implements OnInit {
     });
 
 
-    this.messService.getMyMess().subscribe((mess: any) => {
-      this.menuService.getTodayMenu(mess.id).subscribe((menu: any) => {
-        this.menu = menu.items;
-      });
-    });
+    // Mock today's menu for the UI showcase
+    this.menu = [
+      { name: 'Paneer Butter Masala' },
+      { name: 'Butter Naan (3pcs)' },
+      { name: 'Jeera Rice & Dal Tadka' },
+      { name: 'Gulab Jamun' }
+    ];
   }
 }

@@ -8,6 +8,8 @@ import { PaymentsComponent } from './pages/payments/payments.component';
 import { SubscriptionComponent } from './pages/subscription/subscription.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { BrowseMessComponent } from './pages/browse-mess/browse-mess.component';
+import { MessDetailComponent } from './pages/mess-detail/mess-detail.component';
+import { PlanDetailComponent } from './pages/plan-detail/plan-detail.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,8 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       { path: 'subscription', component: SubscriptionComponent },
       { path: 'browse-mess', component: BrowseMessComponent },
+      { path: 'mess-detail/:id', component: MessDetailComponent },
+      { path: 'plan-detail/:id', component: PlanDetailComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   }

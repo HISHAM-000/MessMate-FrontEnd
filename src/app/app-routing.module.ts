@@ -3,7 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule) },
   { path: 'customer', loadChildren: () => import('./features/customer-dashboard/customer-dashboard.module').then(m => m.CustomerDashboardModule) },
-  { path: '', loadChildren: () => import('./features/landing/landing.module').then(m => m.LandingModule), pathMatch: 'full' }
+  { path: '', loadChildren: () => import('./features/landing/landing.module').then(m => m.LandingModule), pathMatch: 'full' },
+  { path: 'owner',loadChildren: () =>import('./features/mess-owner/mess-owner.module').then(m => m.MessOwnerModule)}  ,
+  {
+  path: 'staff',
+  loadChildren: () =>
+    import('./features/staff/staff.module').then(m => m.StaffModule)
+}
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

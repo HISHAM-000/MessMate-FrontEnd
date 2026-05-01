@@ -1,0 +1,58 @@
+<div class="section">
+
+  <h2>Orders</h2>
+
+  <!-- LOADING -->
+  <div *ngIf="isLoading">Loading...</div>
+
+  <!-- EMPTY -->
+  <div *ngIf="!isLoading && orders.length === 0">
+    No orders found
+  </div>
+
+  <!-- LIST -->
+  <div *ngIf="!isLoading && orders.length > 0">
+
+    <div class="row header">
+      <span>ID</span>
+      <span>Customer</span>
+      <span>Amount</span>
+      <span>Status</span>
+      <span>Update</span>
+    </div>
+
+    <div class="row" *ngFor="let o of orders">
+
+      <span>#{{ o.id }}</span>
+      <span>{{ o.customerName }}</span>
+      <span>₹{{ o.amount }}</span>
+
+      <!-- CURRENT STATUS -->
+      <span>{{ getStatusText(o.status) }}</span>
+
+      <!-- NEXT STATUS ONLY -->
+      <div class="actions" *ngIf="getNextStatuses(o.status).length > 0">
+
+        <select [(ngModel)]="o.newStatus">
+          <option *ngFor="let s of getNextStatuses(o.status)"
+                  [value]="s">
+            {{ getStatusText(s) }}
+          </option>
+        </select>
+
+        <button (click)="updateStatus(o)">
+          Update
+        </button>
+
+      </div>
+
+      <!-- FINAL STATE -->
+      <div *ngIf="getNextStatuses(o.status).length === 0">
+        Completed
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

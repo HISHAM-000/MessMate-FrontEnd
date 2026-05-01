@@ -1,0 +1,36 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>Plans</h1>
+      <p>Create, update, delete, and view all plans</p>
+    </div>
+<button class="primary-btn" routerLink="/owner/plan-form">+ Add Plan</button>
+
+  </div>
+
+  <div class="cards-grid">
+    <div class="plan-card" *ngFor = "let plan of plans">
+      <h3>{{plan.name}}</h3>
+      <p>{{plan.planType}}</p>
+      <p>{{plan.durationDays}}</p>
+      <p>{{plan.minActiveDays}}</p>
+      <p>Breakfast:{{plan.isBreakfast}}</p>
+      <p>Lunch:{{plan.isLunch}}</p>
+      <p>Dinner:{{plan.isDinner}}</p>
+      <p class="price">{{plan.price}}</p>
+      <div class="actions">
+        <button class="secondary-btn">Edit</button>
+        <button class="danger-btn">Delete</button>
+      </div>
+    </div>
+
+    <!-- <div class="plan-card">
+      <h3>Weekly Plan</h3>
+      <p class="price">₹900</p>
+      <div class="actions">
+        <button class="secondary-btn">Edit</button>
+        <button class="danger-btn">Delete</button>
+      </div>
+    </div> -->
+  </div>
+</div>

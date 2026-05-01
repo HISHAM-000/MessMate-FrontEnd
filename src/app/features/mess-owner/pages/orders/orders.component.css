@@ -1,0 +1,67 @@
+.page {
+  padding: 24px;
+  background: #f5f7fb;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.page-header {
+  margin-bottom: 20px;
+}
+
+.panel {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* Grid Layout */
+.order-row {
+  display: grid;
+  grid-template-columns: 0.7fr 2fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.header-row {
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Customer sub text */
+.sub-text {
+  display: block;
+  font-size: 12px;
+  color: #888;
+}
+
+/* Meal badge */
+.meal {
+  font-weight: 500;
+}
+
+/* Status */
+.status {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  width: fit-content;
+}
+
+.status.delivered {
+  background: #e6f7e6;
+  color: #2e7d32;
+}
+
+.status.pending {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+/* Empty */
+.empty {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+}

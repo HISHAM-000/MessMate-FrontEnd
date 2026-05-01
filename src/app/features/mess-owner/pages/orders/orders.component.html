@@ -1,0 +1,58 @@
+<div class="page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <h1>Orders</h1>
+      <p>View all orders of your mess</p>
+    </div>
+  </div>
+
+  <!-- Orders Panel -->
+  <div class="panel">
+
+    <!-- Header Row -->
+    <div class="order-row header-row">
+      <span>ID</span>
+      <span>Customer</span>
+      <span>Meal</span>
+      <span>Date</span>
+      <span>Amount</span>
+      <span>Status</span>
+    </div>
+
+    <!-- Orders -->
+    <div class="order-row" *ngFor="let order of orders">
+
+      <span>#{{ order.id }}</span>
+
+      <span>
+        {{ order.customerName }}
+        <small class="sub-text">{{ order.deliveryAddress }}</small>
+      </span>
+
+      <span class="meal">{{ order.mealSlot }}</span>
+
+      <span>{{ order.orderDate | date:'shortDate' }}</span>
+
+      <span>₹{{ order.amount }}</span>
+
+      <span 
+        class="status"
+        [ngClass]="{
+          'delivered': order.status === 'Delivered',
+          'pending': order.status === 'Pending'
+        }"
+      >
+        {{ order.status }}
+      </span>
+
+    </div>
+
+    <!-- Empty -->
+    <div *ngIf="orders.length === 0" class="empty">
+      No orders found
+    </div>
+
+  </div>
+</div>
