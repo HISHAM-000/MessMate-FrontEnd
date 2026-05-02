@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StaffService } from '../../services/staff.service';
 import { ToastrService } from 'ngx-toastr';
+import { DeliveryService } from '../../services/delivery.services';
 
 @Component({
   selector: 'app-staff',
@@ -26,7 +27,8 @@ export class StaffComponent implements OnInit {
   };
   constructor(
     private staffService: StaffService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private deliveryService: DeliveryService
   ) {}
 
   ngOnInit() {
@@ -85,12 +87,19 @@ export class StaffComponent implements OnInit {
   }
 
   confirmAssign() {
-    if (!this.orderId) {
-      this.toastr.warning("Order ID required");
-      return;
-    }
+  if (!this.orderId) {
+    this.toastr.warning("Order ID required");
+    return;
+  }
 
-    this.staffService.assignDelivery(this.orderId).subscribe({
+  if (!this.selectedStaffId) {
+    this.toastr.warning("Staff not selected");
+    return;
+  }
+
+  this.deliveryService
+    .assignDelivery(this.orderId, this.selectedStaffId)
+    .subscribe({
       next: (res: any) => {
         this.toastr.success(res?.message || "Delivery assigned");
         this.closeAssignModal();
@@ -99,7 +108,7 @@ export class StaffComponent implements OnInit {
         this.toastr.error(err?.error?.message || "Assign failed");
       }
     });
-  }
+}
 
   /* ---------- DELETE ---------- */
 

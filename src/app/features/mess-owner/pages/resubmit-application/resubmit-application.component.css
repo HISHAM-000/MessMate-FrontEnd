@@ -1,52 +1,119 @@
-.page {
-  padding: 24px;
-  background: #f5f7fb;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
+.resubmit-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .page-header {
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f1f5f9;
+}
+
+.header-text h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.header-text p {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 15px;
 }
 
 .panel {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 500px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
-label {
+.form-panel {
+  max-width: 600px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #334155;
   font-weight: 500;
+  font-size: 14px;
 }
 
-input {
+.form-control {
   width: 100%;
-  padding: 10px;
-  margin: 8px 0 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-input:focus {
-  border-color: #4caf50;
+  padding: 12px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 15px;
   outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
-.actions {
-  margin-top: 10px;
+.form-control:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-.primary-btn {
-  background: #4caf50;
-  color: white;
-  padding: 10px 16px;
+.form-actions {
+  margin-top: 32px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   border: none;
-  border-radius: 6px;
+  padding: 12px 24px;
+  border-radius: 10px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s ease;
 }
 
-.primary-btn:disabled {
-  background: #999;
+.btn-primary {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #1d4ed8;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.btn-primary:disabled {
+  background-color: #94a3b8;
   cursor: not-allowed;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

@@ -17,11 +17,17 @@ export class PlanService {
     });
   }
 
+  // getPlanById(id: number) {
+  //   return this.http.get(`${this.apiUrl}/plans/${id}`, {
+  //     withCredentials: true
+  //   });
+  // }
   getPlanById(id: number) {
-    return this.http.get(`${this.apiUrl}/plans/${id}`, {
-      withCredentials: true
-    });
-  }
+  return this.http.get(`${this.apiUrl}/get-plansById/${id}`, {
+    withCredentials: true
+  });
+}
+  
 
   createPlan(data: any) {
     return this.http.post(`${this.apiUrl}/plans`, data, {
@@ -30,10 +36,12 @@ export class PlanService {
   }
 
   updatePlan(id: number, data: any) {
-    return this.http.put(`${this.apiUrl}/update-plan/${id}`, data, {
-      withCredentials: true
-    });
-  }
+  return this.http.put(
+    `${this.apiUrl}/update-plan/${id}`,
+    data, 
+    { withCredentials: true }
+  );
+}
 
   deletePlan(id: number) {
     return this.http.delete(`${this.apiUrl}/plans/${id}`, {

@@ -1,4 +1,4 @@
-.page {
+.menu-page {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -10,85 +10,57 @@
   align-items: center;
 }
 
-.page-header h1 {
+.header-text h1 {
   margin: 0;
   font-size: 28px;
+  font-weight: 700;
   color: #0f172a;
 }
 
-.page-header p {
-  margin: 6px 0 0;
+.header-text p {
+  margin: 4px 0 0;
   color: #64748b;
+  font-size: 15px;
 }
 
-.primary-btn,
-.secondary-btn,
-.danger-btn {
-  border: none;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.primary-btn {
-  background: #2563eb;
-  color: #fff;
-}
-
-.secondary-btn {
-  background: #e2e8f0;
-  color: #0f172a;
-}
-
-.danger-btn {
-  background: #ef4444;
-  color: #fff;
+.week-tabs-container {
+  background-color: #ffffff;
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  display: inline-block;
 }
 
 .week-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
-.week-tabs button {
-  border: 1px solid #cbd5e1;
-  background: #fff;
-  padding: 10px 14px;
-  border-radius: 10px;
+.tab-btn {
+  border: none;
+  background-color: transparent;
+  color: #64748b;
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
 
-.week-tabs button.active {
-  background: #2563eb;
-  color: #fff;
-  border-color: #2563eb;
+.tab-btn:hover {
+  background-color: #f1f5f9;
+  color: #334155;
 }
 
-.panel {
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+.tab-btn.active {
+  background-color: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
 }
 
-.meal-section h3 {
-  margin: 0 0 16px;
-}
-
-.meal-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.meal-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 16px;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
+.menu-content {
+  flex-grow: 1;
 }

@@ -1,7 +1,7 @@
 <div class="page">
   <div class="page-header">
     <div>
-      <h1>Create / Update Plan</h1>
+      <h1>{{ isEditMode ? 'Edit Plan' : 'Create Plan' }}</h1>
       <p>Manage pricing and plan details</p>
     </div>
   </div>
@@ -10,120 +10,66 @@
 
     <div class="form-grid">
 
-      <!-- Plan Name -->
+      <!-- Name -->
       <div class="field">
         <label>Plan Name</label>
-        <input 
-          type="text"
-          name="name"
-          [(ngModel)]="plan.name"
-          #name="ngModel"
-          required
-        />
-        <small class="error" *ngIf="name.invalid && name.touched">
-          Plan name is required
-        </small>
+        <input type="text" name="name" [(ngModel)]="plan.name" required />
       </div>
 
       <!-- Plan Type -->
       <div class="field">
         <label>Plan Type</label>
-        <select 
-          name="planType"
-          [(ngModel)]="plan.planType"
-          #planType="ngModel"
-          required
-        >
+        <select name="planType" [(ngModel)]="plan.planType" required>
           <option [value]="1">Weekly</option>
           <option [value]="2">Monthly</option>
         </select>
       </div>
 
-      <!-- Min Active Days -->
+      <!-- Duration -->
+      <div class="field">
+        <label>Duration Days</label>
+        <input type="number" name="durationDays" [(ngModel)]="plan.durationDays" required min="1" />
+      </div>
+
+      <!-- Min Active -->
       <div class="field">
         <label>Min Active Days</label>
-        <input 
-          type="number"
-          name="minActiveDays"
-          [(ngModel)]="plan.minActiveDays"
-          #minDays="ngModel"
-          required
-          min="1"
-        />
-        <small class="error" *ngIf="minDays.invalid && minDays.touched">
-          Must be at least 1
-        </small>
+        <input type="number" name="minActiveDays" [(ngModel)]="plan.minActiveDays" required min="1" />
       </div>
 
       <!-- Price -->
       <div class="field">
         <label>Price</label>
-        <input 
-          type="number"
-          name="price"
-          [(ngModel)]="plan.price"
-          #price="ngModel"
-          required
-          min="1"
-        />
-        <small class="error" *ngIf="price.invalid && price.touched">
-          Price must be greater than 0
-        </small>
+        <input type="number" name="price" [(ngModel)]="plan.price" required min="1" />
       </div>
 
-      <!-- Meal Availability -->
+      <!-- Meals -->
       <div class="field full">
         <label>Meal Availability</label>
 
-        <div class="checkbox-group">
+        <label>
+          <input type="checkbox" name="isBreakfast" [(ngModel)]="plan.isBreakfast" />
+          Breakfast
+        </label>
 
-          <label class="checkbox-item">
-            <input 
-              type="checkbox"
-              name="isBreakfast"
-              [(ngModel)]="plan.isBreakfast"
-            />
-            Breakfast
-          </label>
+        <label>
+          <input type="checkbox" name="isLunch" [(ngModel)]="plan.isLunch" />
+          Lunch
+        </label>
 
-          <label class="checkbox-item">
-            <input 
-              type="checkbox"
-              name="isLunch"
-              [(ngModel)]="plan.isLunch"
-            />
-            Lunch
-          </label>
+        <label>
+          <input type="checkbox" name="isDinner" [(ngModel)]="plan.isDinner" />
+          Dinner
+        </label>
 
-          <label class="checkbox-item">
-            <input 
-              type="checkbox"
-              name="isDinner"
-              [(ngModel)]="plan.isDinner"
-            />
-            Dinner
-          </label>
-
-        </div>
       </div>
 
     </div>
 
     <div class="form-actions">
-      <button 
-        type="button"
-        class="secondary-btn"
-        routerLink="/owner/plans"
-      >
-        Cancel
-      </button>
+      <button type="button" routerLink="/owner/plans">Cancel</button>
 
-      <button 
-        type="button"
-        class="primary-btn"
-        [disabled]="planForm.invalid"
-        (click)="savePlan(planForm)"
-      >
+      <button type="button" [disabled]="planForm.invalid" (click)="savePlan(planForm)">
         Save Plan
       </button>
     </div>

@@ -23,6 +23,7 @@ const routes: Routes = [
       { path: 'staff', component: StaffComponent },
       { path: 'plans', component: PlansComponent },
       { path: 'plan-form', component: PlanFormComponent },
+      { path: 'plan-form/:id', component: PlanFormComponent },
       { path: 'menu', component: MenuComponent },
       { path: 'menu-day/:day', component: MenuDayComponent },
       { path: 'orders', component: OrdersComponent },

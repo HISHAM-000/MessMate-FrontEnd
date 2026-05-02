@@ -1,36 +1,77 @@
-<div class="page">
-  <div class="page-header">
-    <div>
-      <h1>Plans</h1>
-      <p>Create, update, delete, and view all plans</p>
-    </div>
-<button class="primary-btn" routerLink="/owner/plan-form">+ Add Plan</button>
+<div class="plans-page">
 
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-text">
+      <h1>Subscription Plans</h1>
+      <p>Create, update, delete, and manage all your subscription plans</p>
+    </div>
+
+    <button class="btn btn-primary" routerLink="/owner/plan-form">
+      Add New Plan
+    </button>
   </div>
 
-  <div class="cards-grid">
-    <div class="plan-card" *ngFor = "let plan of plans">
-      <h3>{{plan.name}}</h3>
-      <p>{{plan.planType}}</p>
-      <p>{{plan.durationDays}}</p>
-      <p>{{plan.minActiveDays}}</p>
-      <p>Breakfast:{{plan.isBreakfast}}</p>
-      <p>Lunch:{{plan.isLunch}}</p>
-      <p>Dinner:{{plan.isDinner}}</p>
-      <p class="price">{{plan.price}}</p>
-      <div class="actions">
-        <button class="secondary-btn">Edit</button>
-        <button class="danger-btn">Delete</button>
+  <!-- Plans -->
+  <div class="plans-grid">
+    <div class="plan-card" *ngFor="let plan of plans">
+
+      <div class="plan-header">
+        <h3>{{ plan.name }}</h3>
+        <span class="plan-type">{{ plan.planType }}</span>
       </div>
+
+      <div class="plan-price-wrapper">
+        ₹ {{ plan.price }}
+      </div>
+
+      <div class="plan-details">
+        <p>Duration: {{ plan.durationDays }} days</p>
+        <p>Min Active: {{ plan.minActiveDays }} days</p>
+      </div>
+
+      <div class="meals-included">
+        <p>Meals:</p>
+        <ul>
+          <li [class.included]="plan.isBreakfast">Breakfast</li>
+          <li [class.included]="plan.isLunch">Lunch</li>
+          <li [class.included]="plan.isDinner">Dinner</li>
+        </ul>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="btn btn-outline" (click)="editPlan(plan.id)">
+          Edit
+        </button>
+
+        <button class="btn btn-danger-outline" (click)="openDeleteModal(plan.id)">
+          Delete
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- 🔥 DELETE MODAL -->
+<div class="modal-backdrop" *ngIf="showDeleteModal">
+  <div class="modal-content">
+
+    <h2>Delete Plan</h2>
+    <p>Are you sure you want to delete this plan?</p>
+
+    <div class="modal-actions">
+      <button class="btn btn-outline" (click)="closeDeleteModal()">
+        Cancel
+      </button>
+
+      <button class="btn btn-danger" (click)="confirmDelete()">
+        Delete
+      </button>
     </div>
 
-    <!-- <div class="plan-card">
-      <h3>Weekly Plan</h3>
-      <p class="price">₹900</p>
-      <div class="actions">
-        <button class="secondary-btn">Edit</button>
-        <button class="danger-btn">Delete</button>
-      </div>
-    </div> -->
   </div>
 </div>

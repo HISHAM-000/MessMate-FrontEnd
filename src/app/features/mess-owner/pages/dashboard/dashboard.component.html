@@ -1,50 +1,134 @@
-<div *ngIf="!isLoading">
+<div class="dashboard-wrapper bento-theme">
+  <!-- Dotted pattern background -->
+  <div class="bento-pattern"></div>
 
-  <!-- KPI CARDS -->
-  <div class="cards-grid">
+  <div class="dashboard-page" *ngIf="!isLoading; else loadingState">
 
-    <div class="card">
-      <h3>Total Orders</h3>
-      <p>{{ stats.totalOrders }}</p>
+    <!-- Production Welcome Banner (Bento Style) -->
+    <div class="bento-banner reveal-up">
+      <div class="banner-content">
+        <div class="greeting-chip">
+          <span class="material-symbols-outlined">wb_sunny</span>
+          {{ greeting }}, Owner
+        </div>
+        <h1>Daily Operations Overview</h1>
+        <p>
+          You have <strong>{{ stats.todayMeals }}</strong> meals scheduled for today and
+          <strong>{{ stats.deliveredOrders }}</strong> deliveries completed.
+        </p>
+
+        <!-- Progress Bar -->
+        <div class="progress-section">
+          <div class="progress-header">
+            <span>Delivery Progress</span>
+            <span>{{ mealProgress }}%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" [style.width.%]="mealProgress"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="banner-actions">
+        <button class="bento-btn primary" routerLink="/owner/menu">
+          <span class="material-symbols-outlined">restaurant_menu</span>
+          Manage Menu
+        </button>
+        <button class="bento-btn secondary" routerLink="/owner/orders">
+          <span class="material-symbols-outlined">receipt_long</span>
+          View Orders
+        </button>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>Today's Meals</h3>
-      <p>{{ stats.todayMeals }}</p>
+    <!-- BENTO KPI CARDS -->
+    <div class="bento-grid">
+      <div class="bento-card reveal-up" *ngFor="let card of statCards; let i = index" [style.animation-delay]="(i * 0.05) + 's'" [ngClass]="'card-' + card.color">
+        <div class="stat-header">
+          <div class="stat-icon-wrapper">
+            <span class="material-symbols-outlined">{{ card.icon }}</span>
+          </div>
+          <div class="trend-badge" [ngClass]="card.trendUp ? 'trend-up' : 'trend-down'">
+            <span class="material-symbols-outlined">{{ card.trendUp ? 'arrow_upward' : 'arrow_downward' }}</span>
+            {{ card.trend }}
+          </div>
+        </div>
+
+        <div class="stat-content">
+          <p class="stat-label">{{ card.title }}</p>
+          <h3 class="stat-value">{{ card.value }}</h3>
+        </div>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>Revenue Today</h3>
-      <p>₹{{ stats.revenue }}</p>
-    </div>
+    <!-- BENTO ORDERS PANEL -->
+    <div class="bento-panel reveal-up" style="animation-delay: 0.4s;">
+      <div class="panel-header">
+        <div class="panel-title">
+          <span class="status-dot live-dot"></span>
+          <h2>Live Active Orders</h2>
+        </div>
+        <button class="text-link" routerLink="/owner/orders">
+          View All Orders
+        </button>
+      </div>
 
-    <div class="card">
-      <h3>Delivered</h3>
-      <p>{{ stats.deliveredOrders }}</p>
-    </div>
+      <div class="table-container">
+        <table class="bento-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of todayOrders" class="table-row">
+              <td class="font-mono">#{{ order.id }}</td>
+              <td>
+                <div class="customer-cell">
+                  <div class="bento-avatar">
+                    {{ order.customerName.charAt(0) }}
+                  </div>
+                  <span class="customer-name">{{ order.customerName }}</span>
+                </div>
+              </td>
+              <td class="font-bold">₹{{ order.amount }}</td>
+              <td>
+                <span class="bento-badge"
+                      [ngClass]="order.statusText.toLowerCase()">
+                  {{ order.statusText }}
+                </span>
+              </td>
+              <td>
+                <button class="action-btn" title="View Details">
+                  <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+              </td>
+            </tr>
 
-    <div class="card">
-      <h3>Active Plans</h3>
-      <p>{{ stats.activePlans }}</p>
-    </div>
-
-    <div class="card">
-      <h3>Staff Count</h3>
-      <p>{{ stats.staffCount }}</p>
+            <tr *ngIf="todayOrders.length === 0">
+              <td colspan="5" class="empty-cell">
+                <div class="bento-empty">
+                  <span class="material-symbols-outlined empty-icon">inbox</span>
+                  <h3>No orders to display</h3>
+                  <p>Check back later when customers place their orders.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
   </div>
 
-  <!-- TODAY ORDERS -->
-  <div class="panel">
-    <h2>Today’s Orders</h2>
-
-    <div *ngFor="let order of todayOrders" class="order-row">
-      <span>#{{ order.id }}</span>
-      <span>{{ order.customerName }}</span>
-      <span>₹{{ order.amount }}</span>
-      <span>{{ order.status }}</span>
+  <ng-template #loadingState>
+    <div class="bento-loading reveal-up">
+      <div class="bento-spinner"></div>
+      <p>Fetching dashboard data...</p>
     </div>
-  </div>
-
+  </ng-template>
 </div>

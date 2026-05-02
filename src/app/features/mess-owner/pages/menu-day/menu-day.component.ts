@@ -105,10 +105,10 @@ export class MenuDayComponent implements OnInit {
   }
 
   groupMeals() {
-    this.breakfast = this.menuItems.filter(x => x.mealSlot === 0);
-    this.lunch = this.menuItems.filter(x => x.mealSlot === 1);
-    this.dinner = this.menuItems.filter(x => x.mealSlot === 2);
-  }
+  this.breakfast = this.menuItems.filter(x => x.mealSlot === 1);
+  this.lunch     = this.menuItems.filter(x => x.mealSlot === 2);
+  this.dinner    = this.menuItems.filter(x => x.mealSlot === 3);
+}
 
   openAdd(slot: number) {
 

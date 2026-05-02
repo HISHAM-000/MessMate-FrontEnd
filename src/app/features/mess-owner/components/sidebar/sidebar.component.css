@@ -1,41 +1,90 @@
 .sidebar {
-  width: 260px;
-  background: #111827;
-  color: #fff;
-  padding: 24px 18px;
+  width: 280px;
+  background-color: #ffffff;
+  color: #334155;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 32px;
   flex-shrink: 0;
+  border-right: 1px solid #e2e8f0;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.02);
+  z-index: 10;
 }
 
-.brand h2 {
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.brand-logo {
+  background: #2563eb;
+  color: #ffffff;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.brand-text h2 {
   margin: 0;
-  font-size: 22px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
 }
 
-.brand p {
-  margin: 6px 0 0;
+.brand-text p {
+  margin: 4px 0 0;
   font-size: 13px;
-  color: #cbd5e1;
+  color: #64748b;
+  font-weight: 500;
 }
 
 .menu {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   text-decoration: none;
-  color: #e5e7eb;
-  padding: 12px 14px;
-  border-radius: 10px;
-  transition: 0.2s ease;
+  color: #64748b;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 15px;
+  transition: all 0.2s ease;
 }
 
-.menu a:hover,
+.menu a svg {
+  color: #94a3b8;
+  transition: all 0.2s ease;
+}
+
+.menu a:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.menu a:hover svg {
+  color: #2563eb;
+}
+
 .menu a.active {
-  background: #2563eb;
-  color: #fff;
+  background-color: #eff6ff;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.menu a.active svg {
+  color: #2563eb;
 }

@@ -16,12 +16,6 @@ export class StaffService {
     })
   }
 
-  assignDelivery(orderId :number){
-    return this.http.post(`${this.apiUrl}/${orderId}/assign`,{},{
-      withCredentials : true
-    })
-  }
-
   deleteStaff(staffId : number){
     return this.http.delete(`${this.apiUrl}/delete-staff/${staffId}`,{
       withCredentials : true

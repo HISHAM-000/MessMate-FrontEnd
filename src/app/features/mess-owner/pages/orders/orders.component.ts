@@ -10,22 +10,55 @@ export class OrdersComponent implements OnInit {
 
   orders: any[] = [];
 
-  constructor(private orderService : OrderService){}
+  constructor(private orderService: OrderService) {}
 
-  ngOnInit(){
-    const today = new Date().toISOString().split('T')[0]; 
+  ngOnInit() {
+    const today = new Date().toISOString().split('T')[0];
     this.loadOrders(today);
   }
 
-  loadOrders(date : string){
+  loadOrders(date: string) {
     this.orderService.getOrders(date).subscribe({
-      next: (res : any)=>{
-        this.orders = res.data || res;
-        console.log(this.orders);
+      next: (res: any) => {
+        const data = res?.data ?? res ?? [];
+
+        // 🔥 Normalize API data
+        this.orders = data.map((o: any) => ({
+          ...o,
+          status: this.mapStatus(o.status),
+          mealSlot: this.mapMeal(o.mealSlot)
+        }));
+
+        console.log("ORDERS:", this.orders);
       },
       error: (err: any) => {
-      console.error(err);
+        console.error(err);
+      }
+    });
+  }
+
+  // 🔥 ENUM FIX
+  mapStatus(status: number): string {
+    switch (status) {
+      case 1: return 'Pending';
+      case 2: return 'Preparing';
+      case 3: return 'OutForDelivery';
+      case 4: return 'Delivered';
+      case 5: return 'Skipped';
+      case 6: return 'Cancelled';
+      default: return 'Unknown';
     }
-    })
+  }
+
+  mapMeal(meal: any): string {
+    // already string? return as-is
+    if (typeof meal === 'string') return meal;
+
+    switch (meal) {
+      case 1: return 'Breakfast';
+      case 2: return 'Lunch';
+      case 3: return 'Dinner';
+      default: return '-';
+    }
   }
 }
