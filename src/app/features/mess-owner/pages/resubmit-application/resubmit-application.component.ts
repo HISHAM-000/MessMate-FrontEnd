@@ -17,6 +17,19 @@ export class ResubmitApplicationComponent {
   };
 
   isLoading = false;
+  
+  // Unique Feature additions
+  rejectionReason: string = "Your FSSAI license copy was unreadable or missing. Please ensure the license number matches official records.";
+
+  get progressPercent(): number {
+    let count = 0;
+    if (this.form.name?.trim()) count++;
+    if (this.form.email?.trim()) count++;
+    if (this.form.phoneNumber?.trim()) count++;
+    if (this.form.authorizedName?.trim()) count++;
+    if (this.form.licenseNumber?.trim()) count++;
+    return (count / 5) * 100;
+  }
 
   constructor(
     private service: MessOwnerService,

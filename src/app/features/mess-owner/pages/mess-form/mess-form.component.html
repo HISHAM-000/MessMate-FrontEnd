@@ -1,66 +1,88 @@
-<div class="page">
-
-  <div class="page-header">
-    <h1>Update Mess</h1>
+<div class="form-container fade-in">
+  <div class="form-header">
+    <div class="header-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/></svg>
+    </div>
+    <h1>{{ form.id ? 'Update Mess Details' : 'Create Mess Profile' }}</h1>
+    <p>Fill out the information below to manage your mess</p>
   </div>
 
-  <!-- Loading -->
-  <div *ngIf="isLoading">
-    Loading...
+  <div *ngIf="isLoading" class="loader-container">
+    <div class="pulse-loader"></div>
   </div>
 
-  <!-- Form -->
-  <div *ngIf="!isLoading" class="form-card">
+  <div *ngIf="!isLoading" class="form-card slide-up">
+    <div class="section-title">
+      <h3>Basic Information</h3>
+      <span>Required details for your mess</span>
+    </div>
 
     <div class="form-grid">
-
-      <div class="field">
-        <label>Mess Name</label>
-        <input [(ngModel)]="form.name" name="name" />
+      <div class="input-group">
+        <input type="text" [(ngModel)]="form.name" name="name" id="name" placeholder=" " required />
+        <label for="name">Mess Name</label>
+        <div class="input-border"></div>
       </div>
 
-      <div class="field">
-        <label>City</label>
-        <input [(ngModel)]="form.city" name="city" />
+      <div class="input-group full">
+        <textarea [(ngModel)]="form.description" name="description" id="description" placeholder=" " required rows="3"></textarea>
+        <label for="description">Description</label>
+        <div class="input-border"></div>
       </div>
-
-      <div class="field">
-        <label>State</label>
-        <input [(ngModel)]="form.state" name="state" />
-      </div>
-
-      <div class="field">
-        <label>Postal Code</label>
-        <input [(ngModel)]="form.postalCode" name="postalCode"  />
-      </div>
-
-      <div class="field full">
-        <label>Address</label>
-        <input [(ngModel)]="form.addressLine" name="addressLine"/>
-      </div>
-
-      <div class="field full">
-        <label>Description</label>
-        <textarea [(ngModel)]="form.description" name="description"></textarea>
-      </div>
-
-      <div class="field">
-        <label>Latitude</label>
-        <input type="number" [(ngModel)]="form.latitude" name="latitude" />
-      </div>
-
-      <div class="field">
-        <label>Longitude</label>
-        <input type="number" [(ngModel)]="form.longitude" name="longitude"/>
-      </div>
-
     </div>
 
-    <div class="form-actions">
-      <button class="secondary-btn" (click)="cancel()">Cancel</button>
-      <button class="primary-btn" (click)="save()">Update Mess</button>
+    <div class="section-title mt-4">
+      <h3>Location Information</h3>
+      <span>Help customers find you</span>
     </div>
 
+    <div class="form-grid">
+      <div class="input-group full">
+        <input type="text" [(ngModel)]="form.addressLine" name="addressLine" id="addressLine" placeholder=" " required />
+        <label for="addressLine">Full Address</label>
+        <div class="input-border"></div>
+      </div>
+
+      <div class="input-group">
+        <input type="text" [(ngModel)]="form.city" name="city" id="city" placeholder=" " required />
+        <label for="city">City</label>
+        <div class="input-border"></div>
+      </div>
+
+      <div class="input-group">
+        <input type="text" [(ngModel)]="form.state" name="state" id="state" placeholder=" " required />
+        <label for="state">State</label>
+        <div class="input-border"></div>
+      </div>
+
+      <div class="input-group">
+        <input type="text" [(ngModel)]="form.postalCode" name="postalCode" id="postalCode" placeholder=" " required />
+        <label for="postalCode">Postal Code</label>
+        <div class="input-border"></div>
+      </div>
+
+      <div class="input-group">
+        <input type="number" [(ngModel)]="form.latitude" name="latitude" id="latitude" placeholder=" " required />
+        <label for="latitude">Latitude</label>
+        <div class="input-border"></div>
+      </div>
+
+      <div class="input-group">
+        <input type="number" [(ngModel)]="form.longitude" name="longitude" id="longitude" placeholder=" " required />
+        <label for="longitude">Longitude</label>
+        <div class="input-border"></div>
+      </div>
+    </div>
+
+    <div class="form-actions mt-5">
+      <button class="btn btn-outline" (click)="cancel()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        Cancel
+      </button>
+      <button class="btn btn-primary" (click)="save()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        {{ form.id ? 'Save Changes' : 'Create Mess' }}
+      </button>
+    </div>
   </div>
-
 </div>

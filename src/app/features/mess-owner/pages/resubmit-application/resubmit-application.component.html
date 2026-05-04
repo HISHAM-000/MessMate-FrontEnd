@@ -1,47 +1,124 @@
-<div class="resubmit-page">
+<div class="resubmit-page fade-in">
 
-  <div class="page-header">
-    <div class="header-text">
-      <h1>Resubmit Application</h1>
-      <p>Update your details below to resubmit your mess application.</p>
+  <!-- Premium Header -->
+  <div class="page-header slide-down">
+    <div class="header-content">
+      <div class="header-icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+      </div>
+      <div class="header-text">
+        <h1>Resubmit Application</h1>
+        <p>Update your details below to resubmit your mess application.</p>
+      </div>
     </div>
   </div>
 
-  <div class="panel form-panel">
-    <div class="form-group">
-      <label>Full Name</label>
-      <input type="text" [(ngModel)]="form.name" placeholder="Enter your full name" class="form-control" />
+  <!-- Rejection Notice (Unique Feature) -->
+  <div class="rejection-card slide-up stagger-1">
+    <div class="reject-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+    </div>
+    <div class="reject-content">
+      <h3>Action Required</h3>
+      <p>{{ rejectionReason }}</p>
+    </div>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- Form Panel -->
+    <div class="panel form-panel slide-up stagger-2">
+      
+      <!-- Progress Tracker -->
+      <div class="progress-container">
+        <div class="progress-text">
+          <span>Form Completion</span>
+          <span class="progress-percent">{{ progressPercent | number:'1.0-0' }}%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="progressPercent"></div>
+        </div>
+      </div>
+
+      <div class="form-group slide-up stagger-3">
+        <label>Full Name</label>
+        <input type="text" [(ngModel)]="form.name" placeholder="Enter your full name" class="form-control" />
+      </div>
+
+      <div class="form-group slide-up stagger-4">
+        <label>Email Address</label>
+        <input type="email" [(ngModel)]="form.email" placeholder="Enter your email address" class="form-control" />
+      </div>
+
+      <div class="form-group slide-up stagger-5">
+        <label>Phone Number</label>
+        <input type="tel" [(ngModel)]="form.phoneNumber" placeholder="Enter phone number" class="form-control" />
+      </div>
+
+      <div class="form-group slide-up stagger-6">
+        <label>Authorized Person Name</label>
+        <input type="text" [(ngModel)]="form.authorizedName" placeholder="Name of authorized person" class="form-control" />
+      </div>
+
+      <div class="form-group slide-up stagger-7">
+        <label>License Number</label>
+        <input type="text" [(ngModel)]="form.licenseNumber" placeholder="Enter license number" class="form-control" />
+      </div>
+
+      <div class="form-actions slide-up stagger-8">
+        <button 
+          class="btn btn-primary full-width pulse-hover" 
+          (click)="submit()" 
+          [disabled]="isLoading || progressPercent < 100"
+        >
+          <span class="spinner" *ngIf="isLoading"></span>
+          {{ isLoading ? 'Submitting Application...' : 'Submit Application' }}
+        </button>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label>Email Address</label>
-      <input type="email" [(ngModel)]="form.email" placeholder="Enter your email address" class="form-control" />
-    </div>
+    <!-- Right Side Info Panel -->
+    <div class="info-sidebar slide-up stagger-3">
+      <div class="info-card">
+        <h3>Need Help?</h3>
+        <p>Ensure all your details match official records. This will expedite the approval process.</p>
+        <ul class="help-list">
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Valid FSSAI Number
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Active Contact Number
+          </li>
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Correct Authorization
+          </li>
+        </ul>
+      </div>
 
-    <div class="form-group">
-      <label>Phone Number</label>
-      <input type="tel" [(ngModel)]="form.phoneNumber" placeholder="Enter phone number" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label>Authorized Person Name</label>
-      <input type="text" [(ngModel)]="form.authorizedName" placeholder="Name of authorized person" class="form-control" />
-    </div>
-
-    <div class="form-group">
-      <label>License Number</label>
-      <input type="text" [(ngModel)]="form.licenseNumber" placeholder="Enter license number" class="form-control" />
-    </div>
-
-    <div class="form-actions">
-      <button 
-        class="btn btn-primary full-width" 
-        (click)="submit()" 
-        [disabled]="isLoading"
-      >
-        <span class="spinner" *ngIf="isLoading"></span>
-        {{ isLoading ? 'Submitting Application...' : 'Submit Application' }}
-      </button>
+      <!-- Application Timeline -->
+      <div class="timeline-card">
+        <h3>Application Status</h3>
+        <div class="timeline">
+          <div class="timeline-item completed">
+            <div class="t-dot"></div>
+            <div class="t-text">Submitted Initially</div>
+          </div>
+          <div class="timeline-item rejected">
+            <div class="t-dot"></div>
+            <div class="t-text">Review Failed</div>
+          </div>
+          <div class="timeline-item active">
+            <div class="t-dot"></div>
+            <div class="t-text">Resubmitting</div>
+          </div>
+          <div class="timeline-item pending">
+            <div class="t-dot"></div>
+            <div class="t-text">Final Approval</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

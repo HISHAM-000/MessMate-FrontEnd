@@ -2,10 +2,10 @@
   <!-- Dotted pattern background -->
   <div class="bento-pattern"></div>
 
-  <div class="dashboard-page" *ngIf="!isLoading; else loadingState">
+  <div class="dashboard-page fade-in" *ngIf="!isLoading; else loadingState">
 
     <!-- Production Welcome Banner (Bento Style) -->
-    <div class="bento-banner reveal-up">
+    <div class="bento-banner slide-down">
       <div class="banner-content">
         <div class="greeting-chip">
           <span class="material-symbols-outlined">wb_sunny</span>
@@ -30,11 +30,11 @@
       </div>
       
       <div class="banner-actions">
-        <button class="bento-btn primary" routerLink="/owner/menu">
+        <button class="bento-btn primary pulse-hover" routerLink="/owner/menu">
           <span class="material-symbols-outlined">restaurant_menu</span>
           Manage Menu
         </button>
-        <button class="bento-btn secondary" routerLink="/owner/orders">
+        <button class="bento-btn secondary hover-shake" routerLink="/owner/orders">
           <span class="material-symbols-outlined">receipt_long</span>
           View Orders
         </button>
@@ -43,7 +43,7 @@
 
     <!-- BENTO KPI CARDS -->
     <div class="bento-grid">
-      <div class="bento-card reveal-up" *ngFor="let card of statCards; let i = index" [style.animation-delay]="(i * 0.05) + 's'" [ngClass]="'card-' + card.color">
+      <div class="bento-card reveal-up" *ngFor="let card of statCards; let i = index" [style.animation-delay]="(i * 0.1) + 0.2 + 's'" [ngClass]="'card-' + card.color">
         <div class="stat-header">
           <div class="stat-icon-wrapper">
             <span class="material-symbols-outlined">{{ card.icon }}</span>
@@ -103,7 +103,7 @@
                 </span>
               </td>
               <td>
-                <button class="action-btn" title="View Details">
+                <button class="action-btn hover-shake" title="View Details">
                   <span class="material-symbols-outlined">chevron_right</span>
                 </button>
               </td>

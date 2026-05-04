@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { RegisterOwnerRequest } from 'src/app/shared/models/register-owner-request';
 import { LoginRequest } from 'src/app/shared/models/login-request';
 import { LoginResponse } from 'src/app/shared/models/login-response';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,4 +28,28 @@ export class AuthService {
     withCredentials: true
   });
 }
+
+logout(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/logout`, {}, {
+      withCredentials: true
+    });
+  }
+
+handleLogout() {
+    this.logout().subscribe({
+      next: () => this.clearClientState(),
+      error: () => this.clearClientState()
+    });
+  }
+
+ clearClientState() {
+    localStorage.clear();
+    sessionStorage.clear();
+  }
+
+refreshToken(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/refresh`, {}, {
+      withCredentials: true
+    });
+  }
 }

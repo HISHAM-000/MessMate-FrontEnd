@@ -1,77 +1,101 @@
-<div class="plans-page">
-
+<div class="plans-page fade-in">
   <!-- Header -->
-  <div class="page-header">
-    <div class="header-text">
-      <h1>Subscription Plans</h1>
-      <p>Create, update, delete, and manage all your subscription plans</p>
+  <div class="page-header slide-down">
+    <div class="header-content">
+      <div class="header-icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      </div>
+      <div class="header-text">
+        <h1>Subscription Plans</h1>
+        <p>Create, update, delete, and manage all your subscription plans</p>
+      </div>
     </div>
-
-    <button class="btn btn-primary" routerLink="/owner/plan-form">
+    <button class="btn btn-primary pulse-hover" routerLink="/owner/plan-form">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       Add New Plan
     </button>
   </div>
 
   <!-- Plans -->
   <div class="plans-grid">
-    <div class="plan-card" *ngFor="let plan of plans">
-
-      <div class="plan-header">
-        <h3>{{ plan.name }}</h3>
-        <span class="plan-type">{{ plan.planType }}</span>
+    <div class="theme-card fade-in" *ngFor="let plan of plans; let i = index" [ngStyle]="{'animation-delay': (i * 0.1) + 's'}">
+      
+      <div class="t-card-top">
+        <div class="t-type" [ngClass]="plan.planType === 1 ? 't-weekly' : 't-monthly'">
+          {{ plan.planType === 1 ? 'Weekly Plan' : 'Monthly Plan' }}
+        </div>
+        <div class="t-actions">
+          <button class="t-icon-btn" (click)="editPlan(plan.id)" title="Edit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          </button>
+          <button class="t-icon-btn t-delete" (click)="openDeleteModal(plan.id)" title="Delete">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+          </button>
+        </div>
       </div>
 
-      <div class="plan-price-wrapper">
-        ₹ {{ plan.price }}
+      <div class="t-card-main">
+        <h3 class="t-name">{{ plan.name }}</h3>
+        <div class="t-price-wrap">
+          <span class="t-currency">₹</span><span class="t-price">{{ plan.price }}</span>
+        </div>
       </div>
 
-      <div class="plan-details">
-        <p>Duration: {{ plan.durationDays }} days</p>
-        <p>Min Active: {{ plan.minActiveDays }} days</p>
+      <div class="t-divider"></div>
+
+      <div class="t-details">
+        <div class="t-detail-item">
+          <span class="t-lbl">Duration</span>
+          <span class="t-val">{{ plan.durationDays }} Days</span>
+        </div>
+        <div class="t-detail-item">
+          <span class="t-lbl">Min Active</span>
+          <span class="t-val">{{ plan.minActiveDays }} Days</span>
+        </div>
       </div>
 
-      <div class="meals-included">
-        <p>Meals:</p>
-        <ul>
-          <li [class.included]="plan.isBreakfast">Breakfast</li>
-          <li [class.included]="plan.isLunch">Lunch</li>
-          <li [class.included]="plan.isDinner">Dinner</li>
-        </ul>
+      <div class="t-meals-section">
+        <span class="t-lbl" style="margin-bottom: 8px; display: block;">Meals Included</span>
+        <div class="t-meals-list">
+          <div class="t-meal" [class.active]="plan.isBreakfast">
+            <span>Breakfast</span>
+            <svg class="t-meal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline *ngIf="plan.isBreakfast" points="20 6 9 17 4 12"></polyline><line *ngIf="!plan.isBreakfast" x1="18" y1="6" x2="6" y2="18"></line><line *ngIf="!plan.isBreakfast" x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </div>
+          <div class="t-meal" [class.active]="plan.isLunch">
+            <span>Lunch</span>
+            <svg class="t-meal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline *ngIf="plan.isLunch" points="20 6 9 17 4 12"></polyline><line *ngIf="!plan.isLunch" x1="18" y1="6" x2="6" y2="18"></line><line *ngIf="!plan.isLunch" x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </div>
+          <div class="t-meal" [class.active]="plan.isDinner">
+            <span>Dinner</span>
+            <svg class="t-meal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline *ngIf="plan.isDinner" points="20 6 9 17 4 12"></polyline><line *ngIf="!plan.isDinner" x1="18" y1="6" x2="6" y2="18"></line><line *ngIf="!plan.isDinner" x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </div>
+        </div>
       </div>
 
-      <!-- Actions -->
-      <div class="actions">
-        <button class="btn btn-outline" (click)="editPlan(plan.id)">
-          Edit
-        </button>
-
-        <button class="btn btn-danger-outline" (click)="openDeleteModal(plan.id)">
-          Delete
-        </button>
+    </div>
+    
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="plans.length === 0">
+      <div class="empty-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
       </div>
-
+      <h2>No Plans Yet</h2>
+      <p>Create your first subscription plan to start accepting users.</p>
     </div>
   </div>
-
 </div>
 
-
 <!-- 🔥 DELETE MODAL -->
-<div class="modal-backdrop" *ngIf="showDeleteModal">
-  <div class="modal-content">
-
-    <h2>Delete Plan</h2>
-    <p>Are you sure you want to delete this plan?</p>
-
-    <div class="modal-actions">
-      <button class="btn btn-outline" (click)="closeDeleteModal()">
-        Cancel
-      </button>
-
-      <button class="btn btn-danger" (click)="confirmDelete()">
-        Delete
-      </button>
+<div class="modal-backdrop" *ngIf="showDeleteModal" (click)="closeDeleteModal()">
+  <div class="modal-content pop-in" (click)="$event.stopPropagation()">
+    <div class="modal-header-icon danger">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
     </div>
-
+    <h2>Delete Plan</h2>
+    <p>Are you sure you want to delete this plan? This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" (click)="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger hover-shake" (click)="confirmDelete()">Delete Plan</button>
+    </div>
   </div>
 </div>

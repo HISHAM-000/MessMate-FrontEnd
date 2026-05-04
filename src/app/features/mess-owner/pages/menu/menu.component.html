@@ -1,12 +1,18 @@
-<div class="menu-page">
-  <div class="page-header">
-    <div class="header-text">
-      <h1>Weekly Menu</h1>
-      <p>Manage your meal offerings for each day of the week</p>
+<div class="menu-page fade-in">
+  <!-- Header matching the theme -->
+  <div class="page-header slide-down">
+    <div class="header-content">
+      <div class="header-icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13v-1a7 7 0 0 1 14 0v1a7 7 0 0 1-7 7Z"/><path d="M11 3v4"/><path d="M8 4v3"/><path d="M14 4v3"/><path d="M11 20v2"/></svg>
+      </div>
+      <div class="header-text">
+        <h1>Weekly Menu</h1>
+        <p>Manage your meal offerings for each day of the week</p>
+      </div>
     </div>
   </div>
 
-  <div class="week-tabs-container">
+  <div class="week-tabs-container stagger-in">
     <nav class="week-tabs">
       <button *ngFor="let day of days"
               class="tab-btn"
