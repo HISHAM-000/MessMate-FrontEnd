@@ -9,17 +9,22 @@ import { MessService } from 'src/app/core/services/mess.service';
   styleUrls: ['./browse-mess.component.css']
 })
 export class BrowseMessComponent implements OnInit {
-  messes: Mess[] = [];
+  messes: any[] = [];
 
   constructor(private messService: MessService, private router: Router) { }
 
   ngOnInit(): void {
-    this.messService.getAllMesses().subscribe(messes => {
-      this.messes = messes;
-    });
+    this.loadMesses();
   }
-
-  viewMess(id: number): void {
-    this.router.navigate(['/customer/mess-detail', id]);
+   loadMesses() {
+    this.messService.getAllMess().subscribe({
+      next: (res: any) => {
+        this.messes = res.data; // because ApiResponse
+        console.log(this.messes);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
   }
 }

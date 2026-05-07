@@ -1,17 +1,49 @@
 .recent-orders {
-  background: white;
   padding: 15px;
-  border: 1px solid #ddd;
 }
 
-.recent-orders table {
-  width: 100%;
-  border-collapse: collapse;
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.recent-orders th,
-.recent-orders td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 8px;
+  background: #f5f7fa;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  font-size: 12px;
+  color: #777;
+}
+
+.meal {
+  font-weight: 500;
+}
+
+.status {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Status colors */
+.Pending {
+  color: orange;
+}
+
+.Delivered {
+  color: green;
+}
+
+.Skipped {
+  color: red;
 }

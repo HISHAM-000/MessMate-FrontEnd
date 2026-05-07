@@ -1,58 +1,54 @@
-<div class="section">
+<div class="orders-page">
 
   <h2>Orders</h2>
 
-  <!-- LOADING -->
-  <div *ngIf="isLoading">Loading...</div>
-
-  <!-- EMPTY -->
-  <div *ngIf="!isLoading && orders.length === 0">
-    No orders found
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="active">Pending</button>
+    <button>Preparing</button>
+    <button>Out For Delivery</button>
+    <button>Delivered</button>
+    <button>Cancelled</button>
   </div>
 
-  <!-- LIST -->
-  <div *ngIf="!isLoading && orders.length > 0">
+  <!-- Orders List -->
+  <div class="orders-container">
 
-    <div class="row header">
-      <span>ID</span>
-      <span>Customer</span>
-      <span>Amount</span>
-      <span>Status</span>
-      <span>Update</span>
+    <!-- Order Card -->
+    <div class="order-card">
+      <div class="order-header">
+        <h3>Order #123</h3>
+        <span class="status pending">Pending</span>
+      </div>
+
+      <p><strong>Customer:</strong> John</p>
+      <p><strong>Items:</strong> 3 items</p>
+      <p><strong>Address:</strong> ABC Street</p>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="btn prepare">Prepare</button>
+        <button class="btn cancel">Cancel</button>
+        <button class="btn view">View</button>
+      </div>
     </div>
 
-    <div class="row" *ngFor="let o of orders">
-
-      <span>#{{ o.id }}</span>
-      <span>{{ o.customerName }}</span>
-      <span>₹{{ o.amount }}</span>
-
-      <!-- CURRENT STATUS -->
-      <span>{{ getStatusText(o.status) }}</span>
-
-      <!-- NEXT STATUS ONLY -->
-      <div class="actions" *ngIf="getNextStatuses(o.status).length > 0">
-
-        <select [(ngModel)]="o.newStatus">
-          <option *ngFor="let s of getNextStatuses(o.status)"
-                  [value]="s">
-            {{ getStatusText(s) }}
-          </option>
-        </select>
-
-        <button (click)="updateStatus(o)">
-          Update
-        </button>
-
+    <!-- Repeat Order Card -->
+    <div class="order-card">
+      <div class="order-header">
+        <h3>Order #124</h3>
+        <span class="status preparing">Preparing</span>
       </div>
 
-      <!-- FINAL STATE -->
-      <div *ngIf="getNextStatuses(o.status).length === 0">
-        Completed
-      </div>
+      <p><strong>Customer:</strong> Alex</p>
+      <p><strong>Items:</strong> 2 items</p>
+      <p><strong>Address:</strong> XYZ Street</p>
 
+      <div class="actions">
+        <button class="btn delivery">Out For Delivery</button>
+        <button class="btn view">View</button>
+      </div>
     </div>
 
   </div>
-
 </div>

@@ -1,0 +1,9 @@
+.order-details {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+
+.order-details ul {
+  padding-left: 20px;
+}

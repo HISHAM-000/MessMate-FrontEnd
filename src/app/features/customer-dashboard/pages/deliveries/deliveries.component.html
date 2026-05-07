@@ -1,9 +1,20 @@
-<div class="deliveries-page">
+<div class="deliveries">
 
-  <h2>Today's Delivery</h2>
+  <h2>Active Deliveries</h2>
 
-  <p><strong>Delivery Partner:</strong> John</p>
-  <p><strong>ETA:</strong> 1:00 PM</p>
-  <p><strong>Status:</strong> Out for Delivery</p>
+  <div *ngIf="deliveries.length === 0">
+    <p>No active deliveries</p>
+  </div>
+
+  <div class="card" *ngFor="let d of deliveries">
+
+    <h3>{{ d.messName }}</h3>
+
+    <p>Date: {{ d.orderDate | date:'mediumDate' }}</p>
+    <p>Status: {{ d.status }}</p>
+    <p>Meal: {{ d.mealSlot }}</p>
+    <p>Dish: {{ d.dishName }}</p>
+
+  </div>
 
 </div>

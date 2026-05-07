@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'src/app/shared/models/subscription.model';
 import { SubscriptionService } from 'src/app/core/services/subscription.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-subscription',
@@ -8,58 +8,114 @@ import { SubscriptionService } from 'src/app/core/services/subscription.service'
   styleUrls: ['./subscription.component.css']
 })
 export class SubscriptionComponent implements OnInit {
-  subscription: Subscription | null = null;
-  skipDate: string = '';
 
-  constructor(private subService: SubscriptionService) { }
+  subscriptions: any[] = [];
+
+  // 🔹 Pause Modal State
+  isPauseModalOpen: boolean = false;
+  selectedSubscriptionId: number | null = null;
+
+  pauseFrom: string = '';
+  pauseUntil: string = '';
+
+  constructor(
+    private subscriptionService: SubscriptionService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
-    this.loadSubscription();
+    this.loadSubscriptions();
   }
 
-  loadSubscription(): void {
-    this.subService.getMySubscription().subscribe(sub => {
-      this.subscription = sub;
+  // 🔹 Load subscriptions
+  loadSubscriptions() {
+    this.subscriptionService.getMySubscriptions().subscribe({
+      next: (res: any) => {
+        this.subscriptions = res.data;
+      },
+      error: (err) => this.handleError(err)
     });
   }
 
-  pauseSubscription(): void {
-    if (this.subscription && confirm('Are you sure you want to pause your subscription?')) {
-      this.subService.pause(this.subscription.id).subscribe(() => {
-        this.loadSubscription();
-      });
-    }
+  // 🔹 Open modal
+  openPauseModal(subscriptionId: number) {
+    this.selectedSubscriptionId = subscriptionId;
+    this.isPauseModalOpen = true;
   }
 
-  cancelSubscription(): void {
-    if (this.subscription && confirm('Are you sure you want to cancel? This cannot be undone.')) {
-      this.subService.cancel(this.subscription.id).subscribe(() => {
-        this.loadSubscription();
-      });
-    }
+  // 🔹 Close modal
+  closePauseModal() {
+    this.isPauseModalOpen = false;
+    this.pauseFrom = '';
+    this.pauseUntil = '';
   }
 
-  skipMeal(): void {
-    if (this.skipDate) {
-      this.subService.skipMeal(this.skipDate).subscribe(() => {
-        alert('Meal skipped for ' + this.skipDate);
-        this.skipDate = '';
-        this.loadSubscription();
-      });
-    } else {
-      alert('Please select a date to skip.');
+  // 🔹 Pause subscription
+  pause() {
+
+    if (!this.selectedSubscriptionId) {
+      this.toastr.error('Invalid subscription');
+      return;
     }
+
+    if (!this.pauseFrom || !this.pauseUntil) {
+      this.toastr.warning('Please select pause dates');
+      return;
+    }
+
+    if (this.pauseFrom > this.pauseUntil) {
+      this.toastr.error('Invalid date range');
+      return;
+    }
+
+    const request = {
+      subscriptionId: this.selectedSubscriptionId,
+      pauseFrom: this.pauseFrom,
+      pauseUntil: this.pauseUntil
+    };
+
+    this.subscriptionService.pauseWithDates(this.selectedSubscriptionId, request).subscribe({
+      next: (res: any) => {
+        this.toastr.success(res.message || 'Paused successfully');
+        this.closePauseModal();
+        this.loadSubscriptions();
+      },
+      error: (err) => this.handleError(err)
+    });
   }
-  
-  calculateProgress(): number {
-    if (!this.subscription) return 0;
-    const start = new Date(this.subscription.startDate).getTime();
-    const end = new Date(this.subscription.endDate).getTime();
-    const now = new Date().getTime();
-    
-    if (now < start) return 0;
-    if (now > end) return 100;
-    
-    return Math.round(((now - start) / (end - start)) * 100);
+
+  // 🔹 Cancel
+  cancel(id: number) {
+    this.subscriptionService.cancel(id).subscribe({
+      next: (res: any) => {
+        this.toastr.success(res.message || 'Cancelled');
+        this.loadSubscriptions();
+      },
+      error: (err) => this.handleError(err)
+    });
+  }
+
+  // 🔹 Error handler
+  handleError(err: any) {
+    console.error(err);
+
+    if (Array.isArray(err?.error?.errors)) {
+      err.error.errors.forEach((e: string) => this.toastr.error(e));
+      return;
+    }
+
+    if (err?.error?.errors && typeof err.error.errors === 'object') {
+      Object.values(err.error.errors).forEach((messages: any) => {
+        messages.forEach((msg: string) => this.toastr.error(msg));
+      });
+      return;
+    }
+
+    if (err?.error?.message) {
+      this.toastr.error(err.error.message);
+      return;
+    }
+
+    this.toastr.error('Something went wrong');
   }
 }

@@ -1,34 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Order } from '../../shared/models/order.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
 
-  private mockOrders: Order[] = [
-    {
-      id: 5001,
-      customerId: 1,
-      totalAmount: 2500,
-      status: 'Completed',
-      date: '2026-04-01',
-      items: ['Standard Premium Thali - 1 Month Subscription']
-    },
-    {
-      id: 5002,
-      customerId: 1,
-      totalAmount: 150,
-      status: 'Completed',
-      date: '2026-03-15',
-      items: ['Extra Sweet Dish Add-on']
-    }
-  ];
+  private baseUrl = `${environment.apiUrl}/Order`;
 
-  constructor() { }
+  constructor(private http: HttpClient) {}
 
-  getMyOrders(): Observable<Order[]> {
-    return of(this.mockOrders);
+  getMyOrders() {
+    return this.http.get(`${this.baseUrl}/my-orders`, {
+      withCredentials: true
+    });
   }
 }

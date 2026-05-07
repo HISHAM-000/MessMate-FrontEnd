@@ -1,5 +1,35 @@
-<ul>
-    <li>25 Apr - Delivered</li>
-    <li>24 Apr - Skipped</li>
-    <li>23 Apr - Delivered</li>
-</ul>
+<div class="recent-orders">
+
+  <h3>Recent Orders</h3>
+
+  <!-- Empty -->
+  <div *ngIf="recentOrders.length === 0">
+    <p>No recent orders</p>
+  </div>
+
+  <!-- List -->
+  <div class="order-list" *ngIf="recentOrders.length > 0">
+
+    <div class="order-item" *ngFor="let order of recentOrders">
+
+      <div class="left">
+        <span class="date">
+          {{ order.orderDate | date:'mediumDate' }}
+        </span>
+
+        <span class="meal">
+          {{ order.mealSlot }} - {{ order.dishName }}
+        </span>
+      </div>
+
+      <div class="right">
+        <span class="status" [ngClass]="order.status">
+          {{ order.status }}
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,138 +1,57 @@
-<div class="p-8 max-w-6xl mx-auto">
-  <div class="mb-8">
-    <h1 class="text-3xl font-bold text-gray-800">My Subscription</h1>
-    <p class="text-gray-500 mt-2">Manage your active plans, skip meals, and view history.</p>
+<div class="subscription-page">
+
+  <h2>My Subscriptions</h2>
+
+  <div *ngIf="subscriptions.length === 0">
+    <p>No subscriptions yet.</p>
   </div>
 
-  <div *ngIf="subscription; else noSub">
-    
-    <!-- Active Subscription Card -->
-    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 mb-8 relative overflow-hidden">
-      <!-- Status Indicator -->
-      <div class="absolute top-0 right-0 mt-6 mr-6 flex items-center">
-        <span class="relative flex h-3 w-3 mr-2" *ngIf="subscription.status === 'Active'">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-        </span>
-        <span class="relative flex h-3 w-3 mr-2 bg-yellow-500 rounded-full" *ngIf="subscription.status === 'Paused'"></span>
-        <span class="relative flex h-3 w-3 mr-2 bg-red-500 rounded-full" *ngIf="subscription.status === 'Cancelled'"></span>
-        <span class="font-bold text-sm uppercase tracking-wide" 
-              [ngClass]="{'text-green-600': subscription.status === 'Active', 'text-yellow-600': subscription.status === 'Paused', 'text-red-600': subscription.status === 'Cancelled'}">
-          {{ subscription.status }}
-        </span>
-      </div>
+  <div class="card" *ngFor="let sub of subscriptions">
 
-      <div class="flex items-center gap-4 mb-6">
-        <div class="h-16 w-16 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-          </svg>
-        </div>
-        <div>
-          <h2 class="text-2xl font-bold text-gray-900">{{ subscription.planName }}</h2>
-          <p class="text-gray-500">{{ subscription.messName }}</p>
-        </div>
-      </div>
+    <h3>{{ sub.planName }}</h3>
 
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 border-y border-gray-100 py-6">
-        <div>
-          <p class="text-sm text-gray-500 mb-1">Start Date</p>
-          <p class="font-semibold text-gray-800">{{ subscription.startDate | date:'mediumDate' }}</p>
-        </div>
-        <div>
-          <p class="text-sm text-gray-500 mb-1">End Date</p>
-          <p class="font-semibold text-gray-800">{{ subscription.endDate | date:'mediumDate' }}</p>
-        </div>
-        <div class="col-span-2">
-          <p class="text-sm text-gray-500 mb-1">Duration Progress ({{ calculateProgress() }}%)</p>
-          <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-            <div class="bg-orange-500 h-2.5 rounded-full" [style.width]="calculateProgress() + '%'"></div>
-          </div>
-        </div>
-      </div>
+    <p>Status: <strong>{{ sub.status }}</strong></p>
+    <p>Start: {{ sub.startDate }}</p>
+    <p>End: {{ sub.endDate }}</p>
 
-      <div class="flex flex-wrap gap-4" *ngIf="subscription.status === 'Active'">
-        <button (click)="pauseSubscription()" class="px-6 py-2.5 bg-yellow-100 text-yellow-700 font-bold rounded-xl hover:bg-yellow-200 transition-colors">
-          Pause Plan
-        </button>
-        <button (click)="cancelSubscription()" class="px-6 py-2.5 bg-red-100 text-red-700 font-bold rounded-xl hover:bg-red-200 transition-colors">
-          Cancel Plan
-        </button>
-      </div>
-      <div *ngIf="subscription.status !== 'Active'" class="text-gray-500 italic">
-        Your subscription is currently {{ subscription.status | lowercase }}.
-      </div>
-    </div>
+    <div class="actions">
 
-    <!-- Main Grid: Actions and History -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      
-      <!-- Skip Meal Action -->
-      <div class="lg:col-span-1 space-y-8">
-        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
-          <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            Skip a Meal
-          </h3>
-          <p class="text-sm text-gray-500 mb-4">Going out of town? Skip your meals so you don't waste food.</p>
-          <div class="flex flex-col gap-3">
-            <input type="date" [(ngModel)]="skipDate" class="border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none w-full">
-            <button (click)="skipMeal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-xl transition-colors">
-              Confirm Skip
-            </button>
-          </div>
-        </div>
+      <button
+        *ngIf="sub.status === 'Active'"
+        (click)="openPauseModal(sub.id)">
+        Pause
+      </button>
 
-        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
-          <h3 class="text-lg font-bold text-gray-900 mb-4">Skipped Dates</h3>
-          <ul class="space-y-2">
-            <li *ngFor="let date of subscription.skippedMeals" class="flex items-center text-sm text-gray-600 bg-gray-50 px-3 py-2 rounded-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-              </svg>
-              {{ date | date:'mediumDate' }}
-            </li>
-            <li *ngIf="subscription.skippedMeals.length === 0" class="text-sm text-gray-400 italic">No meals skipped yet.</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- History -->
-      <div class="lg:col-span-2">
-        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 h-full">
-          <h3 class="text-lg font-bold text-gray-900 mb-6">Subscription History</h3>
-          <div class="relative border-l-2 border-gray-100 ml-3">
-            <div *ngFor="let item of subscription.history" class="mb-8 ml-6 relative">
-              <div class="absolute w-3 h-3 bg-orange-500 rounded-full -left-[1.65rem] top-1.5 border-2 border-white shadow-sm"></div>
-              <p class="text-sm font-semibold text-gray-500 mb-1">{{ item.date | date:'mediumDate' }}</p>
-              <h4 class="text-md font-bold text-gray-800">{{ item.action }}</h4>
-              <p class="text-gray-600 text-sm mt-1" *ngIf="item.details">{{ item.details }}</p>
-            </div>
-            
-            <div *ngIf="subscription.history.length === 0" class="text-sm text-gray-400 italic ml-6">
-              No history available.
-            </div>
-          </div>
-        </div>
-      </div>
+      <button
+        *ngIf="sub.status === 'Active'"
+        (click)="cancel(sub.id)">
+        Cancel
+      </button>
 
     </div>
+
   </div>
 
-  <ng-template #noSub>
-    <div class="bg-white rounded-3xl border border-dashed border-gray-300 p-12 text-center">
-      <div class="h-24 w-24 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-        </svg>
-      </div>
-      <h2 class="text-2xl font-bold text-gray-800 mb-2">No Active Subscription</h2>
-      <p class="text-gray-500 mb-8 max-w-md mx-auto">You don't have an active meal plan right now. Browse our messes and subscribe to start enjoying delicious food.</p>
-      <a routerLink="/customer/browse-mess" class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-xl transition-transform transform hover:-translate-y-0.5 shadow-lg shadow-orange-500/30">
-        Browse Messes
-      </a>
+</div>
+
+<!-- 🔥 PAUSE MODAL -->
+<div class="modal-backdrop" *ngIf="isPauseModalOpen">
+
+  <div class="modal">
+
+    <h3>Pause Subscription</h3>
+
+    <label>From</label>
+    <input type="date" [(ngModel)]="pauseFrom" />
+
+    <label>Until</label>
+    <input type="date" [(ngModel)]="pauseUntil" />
+
+    <div class="modal-actions">
+      <button (click)="pause()">Confirm</button>
+      <button (click)="closePauseModal()">Cancel</button>
     </div>
-  </ng-template>
+
+  </div>
+
 </div>

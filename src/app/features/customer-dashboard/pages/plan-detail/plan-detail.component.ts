@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Plan, Meal } from 'src/app/shared/models/menu.model';
 import { PlanService } from 'src/app/core/services/plan.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-plan-detail',
@@ -9,51 +9,118 @@ import { PlanService } from 'src/app/core/services/plan.service';
   styleUrls: ['./plan-detail.component.css']
 })
 export class PlanDetailComponent implements OnInit {
-  plan: Plan | undefined;
-  daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-  selectedDay: string = 'Monday';
+
+  planId!: number;
+  plan: any = null;
+
+  deliveryAddress: string = '';
+  paymentMethod: number = 2;
+
+  isEnrollModalOpen: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private planService: PlanService
-  ) { }
+    private planService: PlanService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.planService.getPlanDetails(id).subscribe(plan => {
-        this.plan = plan;
-        // Auto select today
-        const todayIndex = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
-        this.selectedDay = this.daysOfWeek[todayIndex];
+    this.planId = Number(this.route.snapshot.paramMap.get('id'));
+    this.loadPlan();
+  }
+
+  loadPlan() {
+    this.planService.getPlanById(this.planId).subscribe({
+      next: (res: any) => {
+        this.plan = res.data;
+        console.log('PLAN:', this.plan);
+      },
+      error: (err) => this.handleError(err)
+    });
+  }
+
+  openEnrollModal() {
+    this.isEnrollModalOpen = true;
+  }
+
+  closeEnrollModal() {
+    this.isEnrollModalOpen = false;
+  }
+
+  enroll() {
+
+    if (!this.plan?.messId) {
+      this.toastr.error('Mess information missing');
+      return;
+    }
+
+    if (!this.deliveryAddress || this.deliveryAddress.trim() === '') {
+      this.toastr.warning('Please enter delivery address');
+      return;
+    }
+
+    if (this.paymentMethod !== 2) {
+      this.toastr.warning('Cash on Delivery is not available yet');
+      return;
+    }
+
+    const request = {
+      planId: this.planId,
+      messId: this.plan.messId,
+      deliveryAddress: this.deliveryAddress,
+      deliveryLat: 0,
+      deliveryLng: 0,
+      paymentMethod: this.paymentMethod
+    };
+
+    console.log('REQUEST:', request);
+
+    this.planService.enroll(request).subscribe({
+      next: (res: any) => {
+        this.toastr.success(res.message);
+        this.closeEnrollModal();
+
+        // optional redirect
+        // this.router.navigate(['/customer/subscription']);
+      },
+      error: (err) => this.handleError(err)
+    });
+  }
+
+ handleError(err: any) {
+  console.error('FULL ERROR:', err);
+
+  // Case 1: errors array (your backend)
+  if (Array.isArray(err?.error?.errors)) {
+    err.error.errors.forEach((e: string) => {
+      this.toastr.error(e);
+    });
+    return;
+  }
+
+  // Case 2: validation object (ASP.NET model state)
+  if (err?.error?.errors && typeof err.error.errors === 'object') {
+    Object.values(err.error.errors).forEach((messages: any) => {
+      messages.forEach((msg: string) => {
+        this.toastr.error(msg);
       });
-    }
+    });
+    return;
   }
 
-  getMealsForSelectedDay(): Meal[] {
-    if (!this.plan || !this.plan.meals) return [];
-    return this.plan.meals.filter(m => m.dayOfWeek === this.selectedDay);
+  // Case 3: single message
+  if (err?.error?.message) {
+    this.toastr.error(err.error.message);
+    return;
   }
 
-  selectDay(day: string): void {
-    this.selectedDay = day;
+  if (err?.error?.title) {
+    this.toastr.error(err.error.title);
+    return;
   }
 
-  enroll(): void {
-    if (this.plan) {
-      this.planService.enrollInPlan(this.plan.id).subscribe(() => {
-        alert('Successfully enrolled! (Simulated)');
-        this.router.navigate(['/customer/subscription']);
-      });
-    }
-  }
-
-  goBack(): void {
-    if (this.plan && this.plan.messId) {
-      this.router.navigate(['/customer/mess-detail', this.plan.messId]);
-    } else {
-      this.router.navigate(['/customer/browse-mess']);
-    }
-  }
+  // fallback
+  this.toastr.error('Something went wrong');
+}
 }

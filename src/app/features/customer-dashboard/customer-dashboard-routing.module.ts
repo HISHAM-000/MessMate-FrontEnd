@@ -23,6 +23,7 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       { path: 'subscription', component: SubscriptionComponent },
       { path: 'browse-mess', component: BrowseMessComponent },
+      { path: 'mess-detail', component: MessDetailComponent },
       { path: 'mess-detail/:id', component: MessDetailComponent },
       { path: 'plan-detail/:id', component: PlanDetailComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }

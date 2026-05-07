@@ -1,5 +1,27 @@
-<div class="cards">
-    <div class="card-box">Active Plan</div>
-    <div class="card-box">Meals Left</div>
-    <div class="card-box">Status</div>
+<div class="summary">
+
+  <!-- Active Plan -->
+  <div class="card summary-card primary">
+    <h4>Active Plan</h4>
+    <p>{{ activePlanName || 'No Plan' }}</p>
+  </div>
+
+  <!-- Days Left -->
+  <div class="card summary-card">
+    <h4>Days Left</h4>
+    <p>{{ daysLeft }}</p>
+  </div>
+
+  <!-- Upcoming Meals -->
+  <div class="card summary-card">
+    <h4>Upcoming Meals</h4>
+    <p>{{ upcomingMeals }}</p>
+  </div>
+
+  <!-- Skipped Meals -->
+  <div class="card summary-card">
+    <h4>Skipped Meals</h4>
+    <p>{{ skippedMeals }}</p>
+  </div>
+
 </div>

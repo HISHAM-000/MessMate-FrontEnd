@@ -1,92 +1,39 @@
-<div class="p-8 max-w-7xl mx-auto" *ngIf="plan">
-  <button (click)="goBack()" class="flex items-center text-orange-600 hover:text-orange-700 font-semibold mb-6 transition-colors">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-    </svg>
-    Back to Plans
-  </button>
+<div class="plan-detail" *ngIf="plan">
 
-  <div class="bg-white rounded-3xl shadow-sm p-8 mb-8 border border-gray-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-    <div>
-      <div class="flex items-center gap-3 mb-2">
-        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-bold uppercase tracking-wider">{{ plan.type }}</span>
-      </div>
-      <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">{{ plan.name }}</h1>
-      <p class="text-gray-500 text-lg">{{ plan.description }}</p>
-    </div>
-    
-    <div class="bg-orange-50 border border-orange-100 p-6 rounded-2xl flex flex-col items-center justify-center min-w-[250px]">
-      <p class="text-gray-500 font-medium mb-1">Monthly Subscription</p>
-      <p class="text-4xl font-black text-orange-600 mb-4">₹{{ plan.pricePerMonth }}</p>
-      <button (click)="enroll()" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded-xl font-bold shadow-lg shadow-orange-500/30 transition-all transform hover:-translate-y-0.5">
-        Enroll Now
-      </button>
-    </div>
+  <h2>{{ plan.name }}</h2>
+
+  <p>Price: ₹{{ plan.price }}</p>
+  <p>Duration: {{ plan.durationDays }} days</p>
+
+  <div class="actions">
+    <button (click)="openEnrollModal()">Enroll</button>
   </div>
 
-  <div class="mb-8">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Weekly Menu Schedule</h2>
-    
-    <!-- Day Selector -->
-    <div class="flex overflow-x-auto pb-4 mb-6 hide-scrollbar gap-2">
-      <button *ngFor="let day of daysOfWeek" 
-              (click)="selectDay(day)"
-              [ngClass]="{'bg-gray-900 text-white shadow-md': selectedDay === day, 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200': selectedDay !== day}"
-              class="px-6 py-3 rounded-full font-semibold transition-all whitespace-nowrap">
-        {{ day }}
-      </button>
+</div>
+
+<!-- 🔥 MODAL -->
+<div class="modal-backdrop" *ngIf="isEnrollModalOpen">
+
+  <div class="modal">
+
+    <h3>Enter Delivery Details</h3>
+
+    <input
+      type="text"
+      placeholder="Enter delivery address"
+      [(ngModel)]="deliveryAddress"
+    />
+
+    <select [(ngModel)]="paymentMethod">
+      <option [value]="2">Online Payment</option>
+      <option [value]="1" disabled>Cash (Coming Soon)</option>
+    </select>
+
+    <div class="modal-actions">
+      <button (click)="enroll()">Confirm</button>
+      <button (click)="closeEnrollModal()">Cancel</button>
     </div>
 
-    <!-- Meals for selected day -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div *ngFor="let meal of getMealsForSelectedDay()" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-        <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
-          <h3 class="text-xl font-bold text-gray-800 flex items-center">
-            <!-- Icon based on meal type -->
-            <svg *ngif="meal.mealType === 'Breakfast'" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-            <svg *ngIf="meal.mealType === 'Lunch'" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            <svg *ngIf="meal.mealType === 'Dinner'" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-            {{ meal.mealType }}
-          </h3>
-        </div>
-        
-        <ul class="space-y-3">
-          <li *ngFor="let item of meal.items" class="flex items-start">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <div>
-              <span class="text-gray-700 font-medium">{{ item.name }}</span>
-              <p *ngIf="item.description" class="text-sm text-gray-500">{{ item.description }}</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-      
-      <div *ngIf="getMealsForSelectedDay().length === 0" class="col-span-full py-12 text-center text-gray-500 bg-gray-50 rounded-2xl border border-dashed border-gray-300">
-        No meals scheduled for {{ selectedDay }}.
-      </div>
-    </div>
   </div>
-</div>
 
-<div class="p-8 flex justify-center items-center h-64" *ngIf="!plan">
-  <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
 </div>
-
-<!-- Add some custom CSS to hide scrollbar for the day selector -->
-<style>
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-</style>

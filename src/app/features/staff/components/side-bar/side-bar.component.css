@@ -1,0 +1,66 @@
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background-color: #1e293b;
+  color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Header */
+.sidebar-header {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #334155;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+/* Menu (Top section) */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.menu-item:hover {
+  background-color: #334155;
+}
+
+/* Active route */
+.active {
+  background-color: #475569;
+  font-weight: bold;
+}
+
+/* Footer (Bottom section) */
+.footer {
+  border-top: 1px solid #334155;
+  padding: 10px 0;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Logout styling */
+.logout {
+  color: #f87171;
+}

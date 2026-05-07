@@ -1,20 +1,7 @@
 <div class="layout">
+  <app-side-bar></app-side-bar>
 
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <h2>Staff Panel</h2>
-
-    <a routerLink="dashboard" routerLinkActive="active">Dashboard</a>
-    <a routerLink="menu" routerLinkActive="active">Menu</a>
-    <a routerLink="orders" routerLinkActive="active">Orders</a>
-    <a routerLink="subscriptions" routerLinkActive="active">Subscriptions</a>
-    <a routerLink="users" routerLinkActive="active">Users</a>
-    <a routerLink="delivery" routerLinkActive="active">Delivery</a>
-  </div>
-
-  <!-- CONTENT -->
-  <div class="content">
+  <div class="main-content">
     <router-outlet></router-outlet>
   </div>
-
 </div>

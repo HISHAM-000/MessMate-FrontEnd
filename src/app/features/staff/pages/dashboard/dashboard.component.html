@@ -1,9 +1,14 @@
-<div class="section">
+<div class="dashboard">
   <h2>Dashboard</h2>
 
-  <div class="cards">
-    <div class="card">Orders Today</div>
-    <div class="card">Meals Delivered</div>
-    <div class="card">Revenue</div>
+  <div class="tabs">
+    <button>Preparing</button>
+    <button>Out For Delivery</button>
+    <button>Delivered</button>
+  </div>
+
+  <div class="orders">
+    <app-order-card></app-order-card>
+    <app-order-card></app-order-card>
   </div>
 </div>

@@ -1,5 +1,42 @@
-<ul>
-    <li>Breakfast - Idli</li>
-    <li>Lunch - Rice & Curry</li>
-    <li>Dinner - Chapati</li>
-</ul>
+<div class="today-meal card">
+
+  <h3>Today's Menu</h3>
+
+  <!-- No menu -->
+  <div *ngIf="todayMeals.length === 0" class="empty">
+    <p>No menu available for today</p>
+  </div>
+
+  <!-- Menu list -->
+  <div class="meal-list" *ngIf="todayMeals.length > 0">
+
+    <div class="meal-item" *ngFor="let meal of todayMeals">
+
+      <!-- Left side -->
+      <div class="left">
+        <span class="meal-type">
+          {{ getMealSlotName(meal.mealSlot) }}
+        </span>
+
+        <span class="meal-name">
+          {{ meal.name }} - {{ meal.description }}
+        </span>
+      </div>
+
+      <!-- Right side -->
+      <div class="right">
+        <span class="badge" *ngIf="meal.isVeg">Veg</span>
+        <span class="badge non-veg" *ngIf="!meal.isVeg">Non-Veg</span>
+
+        <span class="availability"
+              [class.available]="meal.isAvailable"
+              [class.unavailable]="!meal.isAvailable">
+          {{ meal.isAvailable ? 'Available' : 'Not Available' }}
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

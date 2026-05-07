@@ -1,0 +1,31 @@
+.mess-detail {
+  padding: 20px;
+}
+
+.mess-detail h2 {
+  margin-bottom: 5px;
+}
+
+.mess-detail h3 {
+  margin-top: 20px;
+}
+
+.plan-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.plan-container {
+  margin-top: 10px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
