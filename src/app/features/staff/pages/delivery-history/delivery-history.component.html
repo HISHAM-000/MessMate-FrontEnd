@@ -1,19 +1,44 @@
-<div class="history">
-  <h2>Delivery History</h2>
+<div class="history-page">
 
-  <table>
-    <tr>
-      <th>Order ID</th>
-      <th>Customer</th>
-      <th>Date</th>
-      <th>Status</th>
-    </tr>
+  <!-- Header -->
+  <div class="page-header">
+    <h1>Delivery History</h1>
 
-    <tr>
-      <td>123</td>
-      <td>John</td>
-      <td>01 May</td>
-      <td>Delivered</td>
-    </tr>
-  </table>
+    <input 
+      type="date"
+      [(ngModel)]="selectedDate"
+    />
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading">
+    Loading history...
+  </div>
+
+  <!-- Cards -->
+  <div class="history-grid" *ngIf="!isLoading">
+
+    <div class="history-card" *ngFor="let d of filteredDeliveries">
+
+      <div class="card-header">
+        <h3>#{{d.orderId || d.id}}</h3>
+        <span class="status">Delivered</span>
+      </div>
+
+      <div class="card-body">
+        <p><strong>Customer:</strong> {{d.customerName}}</p>
+        <p><strong>Address:</strong> {{d.deliveryAddress}}</p>
+        <p><strong>Amount:</strong> ₹{{d.amount}}</p>
+        <p><strong>Date:</strong> {{d.orderDate | date:'medium'}}</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Empty -->
+  <div *ngIf="!isLoading && filteredDeliveries.length === 0" class="empty">
+    No deliveries found.
+  </div>
+
 </div>

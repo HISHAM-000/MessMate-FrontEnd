@@ -9,7 +9,12 @@ const routes: Routes = [
   path: 'staff',
   loadChildren: () =>
     import('./features/staff/staff.module').then(m => m.StaffModule)
-}
+},
+{
+    path: 'admin',
+    loadChildren: () =>
+      import('./features/admin/admin.module').then(m => m.AdminModule)
+  }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

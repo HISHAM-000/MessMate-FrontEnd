@@ -1,11 +1,63 @@
-.history table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
+.history-page {
+  padding: 20px;
+  background: #f5f7fb;
+  min-height: 100vh;
 }
 
-.history th, .history td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: left;
+/* Header */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-header input {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Grid */
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
+}
+
+/* Card */
+.history-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.status {
+  background: #d4edda;
+  color: #155724;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Empty */
+.empty {
+  text-align: center;
+  color: #888;
+  padding: 20px;
 }

@@ -18,34 +18,38 @@ export class SidebarComponent {
     private router: Router
   ) {}
 
+  // onLogout() {
+  //   if (this.isLoggingOut) return;
+
+  //   this.isLoggingOut = true;
+
+    // this.authService.logout().subscribe({
+    //   next: () => {
+    //     this.authService.clearClientState();
+
+    //     this.toastr.success('Logged out successfully');
+
+    //     this.router.navigate(['/login']);
+
+    //     setTimeout(() => window.location.reload(), 100);
+    //   },
+    //   error: () => {
+    //     this.authService.clearClientState();
+
+    //     this.toastr.info('Session cleared');
+
+  //       this.router.navigate(['/auth/login']);
+
+  //       setTimeout(() => window.location.reload(), 100);
+  //     },
+  //     complete: () => {
+  //       this.isLoggingOut = false;
+  //     }
+  //   });
+  // }
   onLogout() {
-    if (this.isLoggingOut) return;
-
-    this.isLoggingOut = true;
-
-    this.authService.logout().subscribe({
-      next: () => {
-        this.authService.clearClientState();
-
-        this.toastr.success('Logged out successfully');
-
-        this.router.navigate(['/login']);
-
-        // 🔥 ensures UI resets completely (important for cookie auth)
-        setTimeout(() => window.location.reload(), 100);
-      },
-      error: () => {
-        this.authService.clearClientState();
-
-        this.toastr.info('Session cleared');
-
-        this.router.navigate(['/login']);
-
-        setTimeout(() => window.location.reload(), 100);
-      },
-      complete: () => {
-        this.isLoggingOut = false;
-      }
-    });
-  }
+  this.authService.handleLogout();
+  this.router.navigate(['/auth/login']);
+  this.toastr.success('Logged out successfully');
+}
 }

@@ -1,0 +1,20 @@
+<div class="staff-page">
+
+  <h1>Select a Mess</h1>
+
+  <div *ngIf="loading">Loading...</div>
+
+  <div class="mess-list" *ngIf="!loading">
+
+    <div 
+      class="mess-card"
+      *ngFor="let mess of messes"
+      (click)="openStaff(mess.id)"
+    >
+      <h3>{{ mess.name }}</h3>
+      <p>{{ mess.city }}, {{ mess.state }}</p>
+    </div>
+
+  </div>
+
+</div>

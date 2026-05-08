@@ -1,0 +1,115 @@
+.dashboard {
+  font-family: 'Inter', sans-serif;
+}
+
+.title {
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* 🔥 Cards Layout */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/* 🔥 Card */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: 0.25s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+/* 🔥 Highlight card (Pending) */
+.card.highlight {
+  border: 2px solid #f59e0b;
+}
+
+/* top section */
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.icon {
+  font-size: 18px;
+}
+
+/* main number */
+.card h2 {
+  font-size: 28px;
+  margin: 10px 0;
+}
+
+/* hint text */
+.hint {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* 🔥 Quick Actions */
+.quick-actions {
+  margin-bottom: 30px;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+}
+
+.action-card {
+  background: #111827;
+  color: white;
+  padding: 14px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.action-card:hover {
+  background: #1f2937;
+}
+
+/* 🔥 Activity Section */
+.section {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+}
+
+.activity-list {
+  margin-top: 10px;
+}
+
+.activity {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.activity:last-child {
+  border-bottom: none;
+}
+
+.activity span {
+  font-size: 12px;
+  color: #9ca3af;
+}

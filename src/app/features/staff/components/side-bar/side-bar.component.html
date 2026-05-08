@@ -24,12 +24,7 @@
   <!-- Footer -->
   <div class="footer">
     <ul>
-      <li routerLink="/staff/profile" routerLinkActive="active" class="menu-item">
-        <span>👤</span>
-        <span>Profile</span>
-      </li>
-
-      <li class="menu-item logout" >
+      <li class="menu-item logout" (click)="logout()" >
         <span>🚪</span>
         <span>Logout</span>
       </li>

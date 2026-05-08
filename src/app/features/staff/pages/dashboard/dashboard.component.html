@@ -1,14 +1,70 @@
 <div class="dashboard">
-  <h2>Dashboard</h2>
 
-  <div class="tabs">
-    <button>Preparing</button>
-    <button>Out For Delivery</button>
-    <button>Delivered</button>
+  <!-- Header -->
+  <div class="header">
+    <h1>Dashboard</h1>
+    <p>Overview of today's orders</p>
   </div>
 
-  <div class="orders">
-    <app-order-card></app-order-card>
-    <app-order-card></app-order-card>
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading">
+    Loading dashboard...
   </div>
+
+  <!-- Stats -->
+  <div class="stats-grid" *ngIf="!isLoading">
+
+    <div class="card total">
+      <h2>{{total}}</h2>
+      <p>Total Orders</p>
+    </div>
+
+    <div class="card pending">
+      <h2>{{pending}}</h2>
+      <p>Pending</p>
+    </div>
+
+    <div class="card preparing">
+      <h2>{{preparing}}</h2>
+      <p>Preparing</p>
+    </div>
+
+    <div class="card out">
+      <h2>{{outForDelivery}}</h2>
+      <p>Out for Delivery</p>
+    </div>
+
+    <div class="card delivered">
+      <h2>{{delivered}}</h2>
+      <p>Delivered</p>
+    </div>
+
+  </div>
+
+  <!-- Recent Orders -->
+  <div class="recent" *ngIf="!isLoading">
+
+    <h2>Recent Orders</h2>
+
+    <div class="recent-list">
+
+      <div class="recent-item" *ngFor="let order of orders | slice:0:5">
+
+        <div>
+          <strong>#{{order.id}}</strong>
+          <p>{{order.customerName}}</p>
+          <p>{{order.mealSlot}}</p>
+          <p>{{order.amount}}</p>
+        </div>
+
+        <span class="status" [ngClass]="order.status">
+          {{order.status}}
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>

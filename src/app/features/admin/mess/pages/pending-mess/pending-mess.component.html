@@ -1,0 +1,75 @@
+<div class="pending-page">
+
+  <h1>Pending Mess Requests</h1>
+
+  <!-- 🔄 Loading -->
+  <div *ngIf="loading">Loading...</div>
+
+  <!-- ❌ Empty -->
+  <div *ngIf="!loading && pendingMesses.length === 0">
+    No pending requests
+  </div>
+
+  <!-- 🔥 List -->
+  <div class="mess-list" *ngIf="!loading">
+
+    <div class="mess-card" *ngFor="let mess of pendingMesses">
+
+      <h3>{{ mess.messName }}</h3>
+
+      <p><strong>Owner:</strong> {{ mess.ownerName }}</p>
+      <p><strong>Email:</strong> {{ mess.ownerEmail }}</p>
+      <p><strong>City:</strong> {{ mess.city }}</p>
+
+      <div class="actions">
+
+        <!-- ✅ Approve -->
+        <button
+          (click)="approve(mess.id)"
+          [disabled]="actionLoadingId === mess.id"
+          class="approve">
+          Approve
+        </button>
+
+        <!-- ❌ Reject -->
+        <button
+          (click)="openRejectModal(mess.id)"
+          [disabled]="actionLoadingId === mess.id"
+          class="reject">
+          Reject
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- 🔥 Reject Modal -->
+<div class="modal-backdrop" *ngIf="showRejectModal">
+
+  <div class="modal">
+
+    <h3>Reject Owner</h3>
+
+    <textarea
+      [(ngModel)]="rejectReason"
+      placeholder="Enter rejection reason..."
+      rows="4">
+    </textarea>
+
+    <div class="modal-actions">
+
+      <button (click)="closeModal()">Cancel</button>
+
+      <button class="reject" (click)="confirmReject()">
+        Confirm Reject
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

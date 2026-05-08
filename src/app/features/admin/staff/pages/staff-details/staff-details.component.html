@@ -1,0 +1,22 @@
+<div class="staff-details-page">
+
+  <button class="back-btn" (click)="goBack()">← Back</button>
+
+  <h1>Staff Members</h1>
+
+  <div *ngIf="loading">Loading...</div>
+
+  <div *ngIf="!loading && staff.length === 0">
+    No staff found for this mess
+  </div>
+
+  <div class="staff-list" *ngIf="!loading">
+
+    <div class="staff-card" *ngFor="let s of staff">
+      <h3>{{ s.name }}</h3>
+      <p>{{ s.email }}</p>
+    </div>
+
+  </div>
+
+</div>

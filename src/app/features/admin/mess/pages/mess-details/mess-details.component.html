@@ -1,0 +1,34 @@
+<div class="details-page">
+
+  <!-- 🔙 Back -->
+  <button class="back-btn" (click)="goBack()">← Back</button>
+
+  <h1>Mess Details</h1>
+
+  <div *ngIf="loading">Loading...</div>
+
+  <div *ngIf="!loading && mess" class="card">
+
+    <h2>{{ mess.name }}</h2>
+
+    <div class="section">
+      <h3>📍 Location</h3>
+      <p>{{ mess.addressLine }}</p>
+      <p>{{ mess.city }}, {{ mess.state }}</p>
+      <p>{{ mess.postalCode }}</p>
+    </div>
+
+    <div class="section">
+      <h3>👤 Owner Info</h3>
+      <p><strong>Name:</strong> {{ mess.ownerName }}</p>
+      <p><strong>Email:</strong> {{ mess.ownerEmail }}</p>
+    </div>
+
+    <div class="section">
+      <h3>📄 License</h3>
+      <p>{{ mess.licenseNumber }}</p>
+    </div>
+
+  </div>
+
+</div>

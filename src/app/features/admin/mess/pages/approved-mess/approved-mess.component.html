@@ -1,0 +1,32 @@
+<div class="approved-page">
+
+  <h1>Approved Mess</h1>
+
+  <!-- Loading -->
+  <div *ngIf="loading">Loading...</div>
+
+  <!-- Empty -->
+  <div *ngIf="!loading && messes.length === 0">
+    No approved mess available
+  </div>
+
+  <!-- List -->
+  <div class="mess-list" *ngIf="!loading">
+
+    <div 
+  class="mess-card"
+  *ngFor="let mess of messes"
+  [routerLink]="['/admin/mess', mess.id]"
+>
+
+  <h3>{{ mess.name }}</h3>
+
+  <p><strong>City:</strong> {{ mess.city }}</p>
+  <p><strong>State:</strong> {{ mess.state }}</p>
+  <p><strong>Rating:</strong> {{ mess.rating }}</p>
+
+</div>
+
+  </div>
+
+</div>

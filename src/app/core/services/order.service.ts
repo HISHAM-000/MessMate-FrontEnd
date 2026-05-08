@@ -18,4 +18,19 @@ export class OrderService {
       withCredentials: true
     });
   }
+
+  getMessOrders(date: string) {
+  return this.http.get(`${this.baseUrl}/mess-orders`, {
+    params: { date: date },
+    withCredentials: true
+  });
+}
+
+updateStatus(orderId: number, status: number) {
+    return this.http.put(
+      `${this.baseUrl}/${orderId}/status`,
+      { newStatus: status },  
+      { withCredentials: true }
+    );
+  }
 }

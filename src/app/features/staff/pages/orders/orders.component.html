@@ -1,54 +1,110 @@
 <div class="orders-page">
 
-  <h2>Orders</h2>
-
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="active">Pending</button>
-    <button>Preparing</button>
-    <button>Out For Delivery</button>
-    <button>Delivered</button>
-    <button>Cancelled</button>
+  <!-- Header -->
+  <div class="page-header">
+    <h1>Orders</h1>
+    <p>Manage and update order status</p>
   </div>
 
-  <!-- Orders List -->
-  <div class="orders-container">
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading">
+    Loading orders...
+  </div>
 
-    <!-- Order Card -->
-    <div class="order-card">
-      <div class="order-header">
-        <h3>Order #123</h3>
-        <span class="status pending">Pending</span>
+  <!-- Orders Grid -->
+  <div class="orders-grid" *ngIf="!isLoading">
+
+    <div class="order-card" *ngFor="let order of orders">
+
+      <!-- Header -->
+      <div class="card-header">
+        <div>
+          <h3>#{{order.id}}</h3>
+          <span class="customer">{{order.customerName}}</span>
+        </div>
+
+        <span class="status" [ngClass]="getStatusText(order.status)">
+          {{ getStatusText(order.status) }}
+        </span>
       </div>
 
-      <p><strong>Customer:</strong> John</p>
-      <p><strong>Items:</strong> 3 items</p>
-      <p><strong>Address:</strong> ABC Street</p>
+      <!-- Body -->
+      <div class="card-body">
+        <p class="address">{{order.deliveryAddress}}</p>
+
+        <div class="items">
+          <span>{{order.mealSlot}}</span>
+          <span>₹{{order.amount}}</span>
+        </div>
+
+        <!-- Current Status -->
+        <div class="status-section">
+          <span class="status-label">Current:</span>
+          <span class="status" [ngClass]="getStatusText(order.status)">
+            {{ getStatusText(order.status) }}
+          </span>
+        </div>
+      </div>
 
       <!-- Actions -->
-      <div class="actions">
-        <button class="btn prepare">Prepare</button>
-        <button class="btn cancel">Cancel</button>
-        <button class="btn view">View</button>
-      </div>
-    </div>
+      <div class="card-actions">
 
-    <!-- Repeat Order Card -->
-    <div class="order-card">
-      <div class="order-header">
-        <h3>Order #124</h3>
-        <span class="status preparing">Preparing</span>
+        <label class="status-label">Update Status:</label>
+
+        <select 
+          class="status-dropdown"
+          [value]="order.status"
+          (change)="onStatusChange(order, $event)"
+          [disabled]="loadingOrderId === order.id">
+
+          <option *ngFor="let s of statusList" [value]="s.value">
+            {{ s.label }}
+          </option>
+
+        </select>
+
+        <span *ngIf="loadingOrderId === order.id" class="updating">
+          Updating...
+        </span>
+
       </div>
 
-      <p><strong>Customer:</strong> Alex</p>
-      <p><strong>Items:</strong> 2 items</p>
-      <p><strong>Address:</strong> XYZ Street</p>
-
-      <div class="actions">
-        <button class="btn delivery">Out For Delivery</button>
-        <button class="btn view">View</button>
-      </div>
     </div>
 
   </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && orders.length === 0" class="empty">
+    No orders found.
+  </div>
+
+</div>
+
+<!-- OTP MODAL -->
+<div class="modal-backdrop" *ngIf="showOtpModal">
+
+  <div class="modal">
+
+    <h3>Confirm Delivery</h3>
+    <p>Enter OTP to complete delivery</p>
+
+    <input 
+      type="text"
+      [(ngModel)]="enteredOtp"
+      placeholder="Enter OTP"
+      maxlength="6"
+    />
+
+    <div class="modal-actions">
+      <button class="btn success" (click)="confirmOtp()">
+        Confirm
+      </button>
+
+      <button class="btn outline" (click)="closeOtpModal()">
+        Cancel
+      </button>
+    </div>
+
+  </div>
+
 </div>

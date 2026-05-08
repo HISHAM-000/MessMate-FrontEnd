@@ -1,0 +1,53 @@
+<div class="owner-page">
+
+  <h1>Owners</h1>
+
+  <!-- Loading -->
+  <div *ngIf="loading">Loading...</div>
+
+  <!-- Empty -->
+  <div *ngIf="!loading && owners.length === 0">
+    No owners found
+  </div>
+
+  <!-- List -->
+  <div class="owner-list" *ngIf="!loading">
+
+    <div class="owner-card" *ngFor="let owner of owners">
+
+      <h3>{{ owner.ownerName }}</h3>
+
+      <p><strong>Email:</strong> {{ owner.ownerEmail }}</p>
+      <p><strong>Mess:</strong> {{ owner.messName }}</p>
+
+      <button class="reject" (click)="openRejectModal(owner.id)">
+        Reject
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- 🔥 Modal -->
+<div class="modal-backdrop" *ngIf="showRejectModal">
+
+  <div class="modal">
+
+    <h3>Reject Owner</h3>
+
+    <textarea
+      [(ngModel)]="rejectReason"
+      placeholder="Enter reason..."
+      rows="4">
+    </textarea>
+
+    <div class="modal-actions">
+      <button (click)="closeModal()">Cancel</button>
+      <button class="reject" (click)="confirmReject()">Confirm</button>
+    </div>
+
+  </div>
+
+</div>
