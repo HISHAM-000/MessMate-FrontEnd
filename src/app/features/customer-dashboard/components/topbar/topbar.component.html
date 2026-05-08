@@ -1,7 +1,35 @@
-<div class="topbar">
+<nav class="aesthetic-topbar">
+  <div class="topbar-left">
+    <button class="menu-toggle" (click)="toggleMenu()">
+      <span>☰</span>
+    </button>
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search users, issues, or IDs..." class="search-input">
+      <span class="search-hint">Ctrl K</span>
+    </div>
+  </div>
 
-  <h3>Welcome User</h3>
+  <div class="topbar-right">
+    <div class="live-clock">
+      <span class="clock-icon">🕒</span>
+      <span class="time-text">{{ currentTime }}</span>
+    </div>
 
-  <button>Logout</button>
+    <div class="notification-trigger">
+      <span class="bell-icon">🔔</span>
+    </div>
 
-</div>
+    <div class="profile-group" (click)="logout()">
+      <div class="avatar-container">
+        <div class="avatar-circle">
+          {{ userInitials }}
+        </div>
+      </div>
+      <div class="user-info">
+        <span class="user-name">{{ customerName }}</span>
+        <span class="user-status">Customer Profile</span>
+      </div>
+    </div>
+  </div>
+</nav>

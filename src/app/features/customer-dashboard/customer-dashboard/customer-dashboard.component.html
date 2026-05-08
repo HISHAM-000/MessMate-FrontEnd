@@ -1,13 +1,13 @@
 <div class="layout">
 
-  <!-- Sidebar -->
-  <app-sidebar></app-sidebar>
+  <!-- Sidebar — controlled by parent -->
+  <app-sidebar [isCollapsed]="isSidebarCollapsed"></app-sidebar>
 
   <!-- Main Area -->
   <div class="main">
 
-    <!-- Topbar -->
-    <app-topbar></app-topbar>
+    <!-- Topbar — emits toggle event -->
+    <app-topbar (toggleClicked)="toggleSidebar()"></app-topbar>
 
     <!-- Dynamic Page Loads Here -->
     <div class="content">

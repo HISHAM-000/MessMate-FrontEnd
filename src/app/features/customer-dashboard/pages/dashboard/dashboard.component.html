@@ -1,102 +1,147 @@
-<div class="dashboard">
+<div class="dashboard-container">
 
-  <!-- 🔹 Summary Cards -->
-  <app-summary-cards></app-summary-cards>
-
-  <!-- 🔹 Active Subscription -->
- <div class="card subscription-card">
-
-  <h3>Active Subscription</h3>
-
-  <!-- No subscription -->
-  <div *ngIf="!activeSub">
-    <p>No active subscription</p>
-  </div>
-
-  <!-- Subscription details -->
-  <div class="sub-details" *ngIf="activeSub">
-
-    <p>
-      <strong>Plan:</strong>
-      {{ activeSub.planName }}
-    </p>
-
-    <p>
-      <strong>Status:</strong>
-      {{ activeSub.isPaused ? 'Paused' : activeSub.status }}
-    </p>
-
-    <p>
-      <strong>Valid Till:</strong>
-      {{ activeSub.endDate | date:'mediumDate' }}
-    </p>
-
-  </div>
-
-  <!-- Actions -->
-  <div class="actions" *ngIf="activeSub">
-
-    <button (click)="goToSubscription()">
-      Manage Subscription
-    </button>
-
-  </div>
-
-</div>
-
-  <!-- 🔹 Middle Section -->
-  <div class="middle-section">
-
-    <!-- Today Meal -->
-    <div class="card">
-      <app-today-meal></app-today-meal>
+  <!-- 🏠 Page Header (like "Operations Command Center") -->
+  <div class="page-header">
+    <div class="header-left">
+      <h1 class="page-title">
+        Meal <span class="title-accent">Command Center</span>
+      </h1>
+      <p class="page-subtitle">Your Subscription & Meal Overview</p>
     </div>
-
-    <!-- Quick Actions -->
-    <div class="card quick-actions">
-
-      <h3>Quick Actions</h3>
-
-      <button (click)="openSkipModal()">Skip Today Meal</button>
-      <button (click)="goToOrders()">View Orders</button>
-      <button (click)="goToSubscription()">Manage Subscription</button>
-
-    </div>
-
-  </div>
-
-  <!-- 🔹 Recent Orders -->
-  <div class="card">
-    <app-recent-order></app-recent-order>
-  </div>
-
-</div>
-<div class="modal-backdrop" *ngIf="isSkipModalOpen">
-
-  <div class="modal">
-
-    <h3>Select Meal to Skip</h3>
-
-    <div class="meal-list">
-
-      <div class="meal-item" *ngFor="let order of todayOrders">
-
-        <span>
-          {{ getMealSlotName(order.mealSlot) }}
-        </span>
-
-        <button (click)="skipMeal(order.id)">
-          Skip
-        </button>
-
+    <div class="header-right">
+      <div class="status-pill" [class.active]="activeSub && !activeSub?.isPaused">
+        <span class="status-dot"></span>
+        <span>{{ activeSub ? 'Subscription Active' : 'No Active Plan' }}</span>
       </div>
+    </div>
+  </div>
 
+  <!-- 📊 Stats Cards (match reference: colored icon, left border, labels) -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon blue">🍱</div>
+      <div class="stat-body">
+        <p class="stat-label">MEAL STREAK</p>
+        <h2 class="stat-value">{{ stats.streak }}</h2>
+        <p class="stat-sub orange">{{ streakRank }} Rank</p>
+      </div>
     </div>
 
-    <button class="close-btn" (click)="closeSkipModal()">
-      Cancel
-    </button>
+    <div class="stat-card">
+      <div class="stat-icon green">✅</div>
+      <div class="stat-body">
+        <p class="stat-label">MEALS SAVED</p>
+        <h2 class="stat-value">{{ stats.mealsSaved }}</h2>
+        <p class="stat-sub green">{{ stats.mealsSaved > 0 ? 'Keep it up!' : '0% Progress' }}</p>
+      </div>
+    </div>
 
+    <div class="stat-card">
+      <div class="stat-icon orange">⏱️</div>
+      <div class="stat-body">
+        <p class="stat-label">DAYS ACTIVE</p>
+        <h2 class="stat-value">{{ stats.daysActive }}</h2>
+        <p class="stat-sub gray">Total Days</p>
+      </div>
+    </div>
+
+    <div class="stat-card" *ngIf="!activeSub">
+      <div class="stat-icon red">⚠️</div>
+      <div class="stat-body">
+        <p class="stat-label">SUBSCRIPTION</p>
+        <h2 class="stat-value">0</h2>
+        <p class="stat-sub red">Subscribe Now</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📋 Main 2-column layout -->
+  <div class="content-grid">
+
+    <!-- Left: Live Feed Panel -->
+    <div class="panel">
+      <div class="panel-header">
+        <h3>📋 Today's Meal Plan</h3>
+      </div>
+      <div class="panel-body">
+        <app-today-meal></app-today-meal>
+      </div>
+    </div>
+
+    <!-- Right: Sidebar panel -->
+    <div class="panel">
+      <div class="panel-header">
+        <h3>📊 Subscription Status</h3>
+      </div>
+      <div class="panel-body">
+
+        <!-- Subscription Info -->
+        <div class="sub-info-block" *ngIf="activeSub; else noSubTpl">
+          <div class="sub-info-row">
+            <span class="sub-info-label">Plan</span>
+            <span class="sub-info-value">{{ activeSub.planName }}</span>
+          </div>
+          <div class="sub-info-row">
+            <span class="sub-info-label">Status</span>
+            <span class="badge-active">Active</span>
+          </div>
+          <div class="sub-info-row">
+            <span class="sub-info-label">Renews</span>
+            <span class="sub-info-value">{{ activeSub.endDate | date:'mediumDate' }}</span>
+          </div>
+          <button class="action-btn primary" (click)="goToSubscription()">Manage Plan →</button>
+        </div>
+        <ng-template #noSubTpl>
+          <div class="empty-state-sm">
+            <p class="empty-icon">🍽️</p>
+            <p class="empty-title">No active subscription</p>
+            <p class="empty-desc">Start your mess journey and enjoy healthy meals daily.</p>
+            <button class="action-btn primary" (click)="goToBrowseMess()">Browse Messes →</button>
+          </div>
+        </ng-template>
+
+        <!-- Daily Focus -->
+        <div class="divider"></div>
+        <div class="focus-block">
+          <p class="focus-label">💡 Daily Focus</p>
+          <p class="focus-text">{{ dailyFocus }}</p>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="divider"></div>
+        <div class="quick-row">
+          <button class="action-btn secondary" (click)="openSkipModal()">⏭ Skip Meal</button>
+          <button class="action-btn secondary" (click)="goToOrders()">📜 Orders</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Orders -->
+  <div class="panel full-width">
+    <div class="panel-header">
+      <h3>🕓 Recent Activity</h3>
+    </div>
+    <div class="panel-body">
+      <app-recent-order></app-recent-order>
+    </div>
+  </div>
+
+  <!-- 🧊 Skip Modal -->
+  <div class="modal-overlay" *ngIf="isSkipModalOpen">
+    <div class="modal-box">
+      <h3>Skip a Meal</h3>
+      <div class="meal-list">
+        <div class="meal-row" *ngFor="let order of todayOrders">
+          <span>{{ getMealSlotName(order.mealSlot) }}</span>
+          <button class="btn-skip" (click)="skipMeal(order.id)">Skip</button>
+        </div>
+        <div class="empty-state-sm" *ngIf="todayOrders.length === 0">
+          <p>No meals scheduled for today.</p>
+        </div>
+      </div>
+      <button class="action-btn primary" style="margin-top:1.5rem; width:100%;" (click)="closeSkipModal()">Close</button>
+    </div>
   </div>
 
 </div>

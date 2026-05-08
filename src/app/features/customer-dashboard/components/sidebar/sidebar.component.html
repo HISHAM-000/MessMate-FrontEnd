@@ -1,19 +1,59 @@
-<div class="sidebar">
+<aside class="aesthetic-sidebar" [class.collapsed]="isCollapsed">
+  <div class="sidebar-header">
+    <div class="logo-area">
+      <div class="logo-icon">M</div>
+      <h2 class="logo-text" *ngIf="!isCollapsed">MessMate</h2>
+    </div>
+  </div>
 
-  <h2>MessMate</h2>
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <p class="section-label" *ngIf="!isCollapsed">Main Menu</p>
+      <ul>
+        <li>
+          <a routerLink="dashboard" routerLinkActive="active-link" class="nav-item">
+            <span class="icon">🏠</span>
+            <span class="label" *ngIf="!isCollapsed">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="browse-mess" routerLinkActive="active-link" class="nav-item">
+            <span class="icon">🔍</span>
+            <span class="label" *ngIf="!isCollapsed">Browse Mess</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="subscription" routerLinkActive="active-link" class="nav-item">
+            <span class="icon">💳</span>
+            <span class="label" *ngIf="!isCollapsed">Subscriptions</span>
+          </a>
+        </li>
+      </ul>
+    </div>
 
-  <ul>
-    <li><a routerLink = "dashboard">Dashboard</a></li>
-    <li><a routerLink = "browse-mess">Browse Mess</a></li>
-    <li><a routerLink = "subscription">My Plans</a></li>
-    <li><a routerLink = "orders">Orders</a></li>
-    <li><a routerLink = "deliveries">Deliveries</a></li>
-    <li>
-      <button class="logout-btn" (click)="logout()">
-        Logout
-      </button>
-    </li>
-    
-  </ul>
+    <div class="nav-section">
+      <p class="section-label" *ngIf="!isCollapsed">Account</p>
+      <ul>
+        <li>
+          <a routerLink="orders" routerLinkActive="active-link" class="nav-item">
+            <span class="icon">📜</span>
+            <span class="label" *ngIf="!isCollapsed">My Orders</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="deliveries" routerLinkActive="active-link" class="nav-item">
+            <span class="icon">🚚</span>
+            <span class="label" *ngIf="!isCollapsed">Deliveries</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-</div>
+  <div class="sidebar-footer">
+    <button class="logout-action" (click)="logout()">
+      <span class="icon">🚪</span>
+      <span class="label" *ngIf="!isCollapsed">Logout</span>
+    </button>
+  </div>
+</aside>
