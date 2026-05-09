@@ -13,9 +13,10 @@
 }
 
 .aesthetic-sidebar.collapsed {
-  width: 0;
-  min-width: 0;
-  border-right: none;
+  width: 80px;
+  min-width: 80px;
+  border-right: 1px solid #f1f5f9;
+  align-items: center;
 }
 
 .collapse-toggle {
@@ -36,8 +37,8 @@
 }
 
 .collapse-toggle:hover {
-  background: #e2e8f0;
-  color: #2563eb;
+  background: #ffedd5;
+  color: #f97316;
 }
 
 .sidebar-header {
@@ -55,7 +56,7 @@
 
 .logo-icon {
   width: 32px; height: 32px;
-  background: #2563eb;
+  background: #f97316;
   color: white;
   border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
@@ -111,13 +112,13 @@
 }
 
 .nav-item:hover {
-  color: #2563eb;
-  background: #f8fafc;
+  color: #f97316;
+  background: #fff7ed;
 }
 
 .nav-item.active-link {
-  background: #eff6ff;
-  color: #2563eb;
+  background: #fff7ed;
+  color: #f97316;
 }
 
 .nav-item .icon {
