@@ -1,57 +1,137 @@
-<div class="subscription-page">
+<div class="min-h-screen bg-slate-50 font-sans pb-20">
 
-  <h2>My Subscriptions</h2>
-
-  <div *ngIf="subscriptions.length === 0">
-    <p>No subscriptions yet.</p>
+  <!-- Header -->
+  <div class="bg-white border-b border-slate-200 shadow-sm mb-8 pt-8 pb-10">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center space-x-3 mb-2">
+        <div class="w-10 h-10 bg-primary-50 rounded-lg flex items-center justify-center text-primary-600">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+        </div>
+        <h1 class="text-3xl font-heading font-bold text-slate-900">My Subscriptions</h1>
+      </div>
+      <p class="text-slate-500 max-w-2xl text-lg">Manage your active mess plans, pause deliveries when you're away, and keep track of your billing cycles seamlessly.</p>
+    </div>
   </div>
 
-  <div class="card" *ngFor="let sub of subscriptions">
-
-    <h3>{{ sub.planName }}</h3>
-
-    <p>Status: <strong>{{ sub.status }}</strong></p>
-    <p>Start: {{ sub.startDate }}</p>
-    <p>End: {{ sub.endDate }}</p>
-
-    <div class="actions">
-
-      <button
-        *ngIf="sub.status === 'Active'"
-        (click)="openPauseModal(sub.id)">
-        Pause
+  <div class="max-w-5xl mx-auto px-6 lg:px-8">
+    
+    <!-- Empty State -->
+    <div *ngIf="subscriptions.length === 0" class="text-center py-20 bg-white rounded-3xl border border-dashed border-slate-300 shadow-sm">
+      <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-10 h-10 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+      </div>
+      <h3 class="text-xl font-heading font-semibold text-slate-900 mb-2">No Active Subscriptions</h3>
+      <p class="text-slate-500 mb-6 max-w-md mx-auto">You aren't subscribed to any mess plans right now. Discover authentic local messes and start your journey.</p>
+      <button routerLink="/customer/browse-mess" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors">
+        Browse Messes
       </button>
+    </div>
 
-      <button
-        *ngIf="sub.status === 'Active'"
-        (click)="cancel(sub.id)">
-        Cancel
-      </button>
+    <!-- Subscription Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" *ngIf="subscriptions.length > 0">
+      
+      <div *ngFor="let sub of subscriptions" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col relative group">
+        <!-- Status Indicator Line -->
+        <div class="absolute top-0 left-0 w-full h-1 transition-colors" 
+             [ngClass]="{'bg-secondary-500': sub.status === 'Active', 'bg-amber-500': sub.status === 'Paused', 'bg-slate-300': sub.status === 'Cancelled'}"></div>
+        
+        <div class="p-6 flex-grow mt-1">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-heading font-bold text-slate-900">{{ sub.planName }}</h3>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border"
+                  [ngClass]="{
+                    'bg-secondary-50 text-secondary-700 border-secondary-200': sub.status === 'Active',
+                    'bg-amber-50 text-amber-700 border-amber-200': sub.status === 'Paused',
+                    'bg-slate-50 text-slate-700 border-slate-200': sub.status === 'Cancelled'
+                  }">
+              <span class="w-1.5 h-1.5 rounded-full mr-2" 
+                    [ngClass]="{'bg-secondary-500': sub.status === 'Active', 'bg-amber-500': sub.status === 'Paused', 'bg-slate-400': sub.status === 'Cancelled'}"></span>
+              {{ sub.status }}
+            </span>
+          </div>
+
+          <div class="space-y-3 mb-2 bg-slate-50/50 rounded-xl p-4 border border-slate-100">
+            <div class="flex items-center text-sm text-slate-600">
+              <svg class="w-5 h-5 mr-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span class="font-medium w-12 text-slate-500">Start</span>
+              <span class="font-semibold text-slate-800">{{ sub.startDate | date:'mediumDate' }}</span>
+            </div>
+            <div class="flex items-center text-sm text-slate-600">
+              <svg class="w-5 h-5 mr-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span class="font-medium w-12 text-slate-500">End</span>
+              <span class="font-semibold text-slate-800">{{ sub.endDate | date:'mediumDate' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 px-6 py-4 border-t border-slate-100 flex justify-end gap-3" *ngIf="sub.status === 'Active'">
+          <button (click)="openPauseModal(sub.id)" class="px-5 py-2.5 bg-white border border-slate-300 rounded-xl shadow-sm text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all active:scale-95">
+            Pause Plan
+          </button>
+          <button (click)="cancel(sub.id)" class="px-5 py-2.5 border border-red-200 rounded-xl shadow-sm text-sm font-semibold text-red-600 bg-red-50 hover:bg-red-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all active:scale-95">
+            Cancel
+          </button>
+        </div>
+      </div>
 
     </div>
 
   </div>
-
 </div>
 
 <!-- 🔥 PAUSE MODAL -->
-<div class="modal-backdrop" *ngIf="isPauseModalOpen">
+<div *ngIf="isPauseModalOpen" class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-0">
+  <!-- Backdrop -->
+  <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" (click)="closePauseModal()"></div>
 
-  <div class="modal">
-
-    <h3>Pause Subscription</h3>
-
-    <label>From</label>
-    <input type="date" [(ngModel)]="pauseFrom" />
-
-    <label>Until</label>
-    <input type="date" [(ngModel)]="pauseUntil" />
-
-    <div class="modal-actions">
-      <button (click)="pause()">Confirm</button>
-      <button (click)="closePauseModal()">Cancel</button>
+  <!-- Modal Panel -->
+  <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-md mx-auto overflow-hidden transform transition-all border border-slate-100">
+    <div class="px-8 py-6 border-b border-slate-100 bg-slate-50/50">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-xl font-heading font-bold text-slate-900 leading-tight">Pause Subscription</h3>
+          <p class="text-sm text-slate-500">Temporarily stop your mess deliveries.</p>
+        </div>
+      </div>
     </div>
 
-  </div>
+    <div class="px-8 py-6 space-y-5">
+      <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">From Date</label>
+        <div class="relative">
+          <input type="date" [(ngModel)]="pauseFrom" 
+                 class="block w-full rounded-xl border-slate-300 bg-white border px-4 py-3 text-slate-900 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm transition-colors" />
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Until Date</label>
+        <div class="relative">
+          <input type="date" [(ngModel)]="pauseUntil" 
+                 class="block w-full rounded-xl border-slate-300 bg-white border px-4 py-3 text-slate-900 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm transition-colors" />
+        </div>
+      </div>
+    </div>
 
+    <div class="bg-slate-50 px-8 py-5 border-t border-slate-100 flex justify-end gap-3">
+      <button (click)="closePauseModal()" class="px-5 py-2.5 bg-white border border-slate-300 rounded-xl shadow-sm text-sm font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all active:scale-95">
+        Cancel
+      </button>
+      <button (click)="pause()" class="px-5 py-2.5 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-all active:scale-95">
+        Confirm Pause
+      </button>
+    </div>
+  </div>
 </div>

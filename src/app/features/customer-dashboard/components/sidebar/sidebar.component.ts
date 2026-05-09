@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
+  @Input() isCollapsed = false;
 
   constructor(private authService : AuthService,
     private router : Router,
@@ -16,8 +17,10 @@ export class SidebarComponent {
   ){}
 
   logout() {
-  this.authService.handleLogout();
-  this.router.navigate(['/auth/login']);
-  this.toastr.success('Logged out successfully');
-}
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.authService.handleLogout();
+    this.router.navigate(['/auth/login']);
+    this.toastr.success('Logged out successfully');
+  }
 }
