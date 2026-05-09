@@ -162,12 +162,27 @@
 
 .avatar-circle {
   width: 100%; height: 100%;
-  background: #10b981;
+  background: #f97316;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   color: white; font-weight: 800;
   border: 2px solid white;
-  box-shadow: 0 0 0 1px #10b981;
+  box-shadow: 0 0 0 2px #f97316;
+}
+
+.avatar-img {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 2.5px solid white;
+  box-shadow: 0 0 0 2px #f97316;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.profile-group:hover .avatar-img {
+  transform: scale(1.07);
+  box-shadow: 0 0 0 3px #f97316, 0 4px 12px rgba(249,115,22,0.3);
 }
 
 .user-info {

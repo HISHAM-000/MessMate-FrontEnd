@@ -55,4 +55,17 @@ export class TopbarComponent implements OnInit, OnDestroy {
     localStorage.removeItem('user');
     window.location.reload();
   }
+
+  /** Fallback: if avatar image fails, replace with styled initials span */
+  onAvatarError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.style.display = 'none';
+    const parent = img.parentElement;
+    if (parent && !parent.querySelector('.avatar-fallback')) {
+      const fallback = document.createElement('div');
+      fallback.className = 'avatar-circle avatar-fallback';
+      fallback.textContent = this.userInitials;
+      parent.appendChild(fallback);
+    }
+  }
 }
