@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./customer-dashboard.component.css']
 })
 export class CustomerDashboardComponent {
+  isSidebarCollapsed = false;
 
+  toggleSidebar() {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed;
+  }
 }
