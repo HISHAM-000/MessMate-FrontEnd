@@ -1,39 +1,130 @@
-<div class="plan-detail" *ngIf="plan">
+<div class="plan-detail-page" *ngIf="plan">
+  <div class="content-wrapper">
+    
+    <!-- Back Navigation -->
+    <a [routerLink]="['/customer/mess', plan.messId]" class="back-link">
+      <div class="back-icon">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+      </div>
+      <span>Back to Mess</span>
+    </a>
 
-  <h2>{{ plan.name }}</h2>
+    <!-- Plan Card -->
+    <div class="plan-hero-card">
+      <div class="hero-header">
+        <div class="header-content">
+          <div class="icon-wrapper">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <div class="title-wrapper">
+            <span class="badge-tag">Subscription Plan</span>
+            <h1 class="plan-title">{{ plan.name }}</h1>
+          </div>
+        </div>
+        <div class="price-badge">
+          <span class="currency">₹</span>
+          <span class="price">{{ plan.price }}</span>
+        </div>
+      </div>
 
-  <p>Price: ₹{{ plan.price }}</p>
-  <p>Duration: {{ plan.durationDays }} days</p>
+      <div class="hero-body">
+        
+        <div class="features-grid">
+          
+          <div class="feature-card">
+            <div class="feature-icon duration-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="feature-info">
+              <span class="feature-label">Plan Duration</span>
+              <span class="feature-value">{{ plan.durationDays }} Days</span>
+            </div>
+          </div>
 
-  <div class="actions">
-    <button (click)="openEnrollModal()">Enroll</button>
+          <div class="feature-card">
+            <div class="feature-icon active-days-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="feature-info">
+              <span class="feature-label">Min Active Days</span>
+              <span class="feature-value">{{plan.minActiveDays}} Days</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="meal-inclusions">
+          <h4 class="section-title">Meals Included</h4>
+          <div class="pills-container">
+            <div class="meal-pill" [class.active]="plan.isBreakfast" [class.inactive]="!plan.isBreakfast">
+              <span class="status-dot"></span> Breakfast
+            </div>
+            <div class="meal-pill" [class.active]="plan.isLunch" [class.inactive]="!plan.isLunch">
+              <span class="status-dot"></span> Lunch
+            </div>
+            <div class="meal-pill" [class.active]="plan.isDinner" [class.inactive]="!plan.isDinner">
+              <span class="status-dot"></span> Dinner
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-footer">
+        <div class="guarantee-text">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          Secure & fast enrollment
+        </div>
+        <button class="btn-enroll" (click)="openEnrollModal()">
+          <span>Enroll Now</span>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </div>
+    </div>
   </div>
-
 </div>
 
-<!-- 🔥 MODAL -->
+<!-- Loading state if plan is not yet loaded -->
+<div class="loading-state" *ngIf="!plan">
+  <div class="spinner"></div>
+  <p>Loading plan details...</p>
+</div>
+
+<!-- 🔥 ENROLL MODAL -->
 <div class="modal-backdrop" *ngIf="isEnrollModalOpen">
-
-  <div class="modal">
-
-    <h3>Enter Delivery Details</h3>
-
-    <input
-      type="text"
-      placeholder="Enter delivery address"
-      [(ngModel)]="deliveryAddress"
-    />
-
-    <select [(ngModel)]="paymentMethod">
-      <option [value]="2">Online Payment</option>
-      <option [value]="1" disabled>Cash (Coming Soon)</option>
-    </select>
-
-    <div class="modal-actions">
-      <button (click)="enroll()">Confirm</button>
-      <button (click)="closeEnrollModal()">Cancel</button>
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-icon-wrapper">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+      </div>
+      <h3>Delivery Details</h3>
+      <p>Please enter your delivery address and payment method to confirm enrollment.</p>
     </div>
 
-  </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Delivery Address</label>
+        <textarea
+          placeholder="Enter complete delivery address"
+          [(ngModel)]="deliveryAddress"
+          class="form-input text-area"
+          rows="3"
+        ></textarea>
+      </div>
 
+      <div class="form-group">
+        <label>Payment Method</label>
+        <div class="select-wrapper">
+          <select [(ngModel)]="paymentMethod" class="form-input">
+            <option [value]="2">Online Payment</option>
+            <option [value]="1" disabled>Cash on Delivery (Coming Soon)</option>
+          </select>
+          <svg class="select-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="closeEnrollModal()">Cancel</button>
+      <button class="btn-confirm" (click)="enroll()" [disabled]="!deliveryAddress">Confirm & Pay</button>
+    </div>
+  </div>
 </div>

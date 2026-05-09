@@ -1,28 +1,84 @@
-<div *ngIf="mess">
+<div class="mess-detail-page" *ngIf="mess">
 
-  <h2>{{ mess.name }}</h2>
-  <p>Location: {{ mess.place }}</p>
-  <p>{{ mess.description }}</p>
-  <p>{{ mess.addressLine }}</p>
-  <p>{{ mess.city }}</p>
-  <p>{{ mess.state }}</p>
-  <p>{{ mess.postalCode }}</p>
-
-  <h3>Plans</h3>
-
-<div class="plan-container">
-
-  <div class="card" *ngFor="let plan of plans">
-    <p><strong>{{ plan.name }}</strong></p>
-    <p>Price: ₹{{ plan.price }}</p>
-    <p>Duration: {{ plan.duration }} days</p>
-
-    <button class="view-btn"
-      [routerLink]="['/customer/plan-detail', plan.id]">
-      View Plan
-    </button>
+  <!-- Header Banner -->
+  <div class="mess-header">
+    <div class="header-content">
+      <h1 class="mess-name">{{ mess.name }}</h1>
+      <div class="mess-meta">
+        <span class="meta-item">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          {{ mess.place }}
+        </span>
+      </div>
+    </div>
   </div>
 
+  <!-- Main Content -->
+  <div class="mess-content">
+    
+    <!-- About Section -->
+    <div class="content-section about-section">
+      <div class="section-title">
+        <h2>About this Mess</h2>
+        <div class="title-underline"></div>
+      </div>
+      <p class="description-text">{{ mess.description }}</p>
+      
+      <div class="address-card">
+        <div class="icon-wrapper">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+        </div>
+        <div class="address-details">
+          <p>{{ mess.addressLine }}</p>
+          <p>{{ mess.city }}, {{ mess.state }} {{ mess.postalCode }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plans Section -->
+    <div class="content-section plans-section">
+      <div class="section-title">
+        <h2>Available Plans</h2>
+        <div class="title-underline"></div>
+      </div>
+
+      <div class="empty-state" *ngIf="plans.length === 0">
+        <p>No plans available for this mess right now.</p>
+      </div>
+
+      <div class="plans-grid" *ngIf="plans.length > 0">
+        <div class="plan-card" *ngFor="let plan of plans">
+          <div class="plan-header">
+            <h3>{{ plan.name }}</h3>
+          </div>
+          
+          <div class="plan-body">
+            <div class="price-wrap">
+              <span class="currency">₹</span>
+              <span class="price">{{ plan.price }}</span>
+            </div>
+            
+            <div class="duration-badge">
+               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              {{ plan.durationDays }} days
+            </div>
+          </div>
+          
+          <div class="plan-footer">
+            <button class="btn-primary" [routerLink]="['/customer/plan-detail', plan.id]">
+              View Plan Details
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </div>
 
+<!-- Loading state if mess is not yet loaded -->
+<div class="loading-state" *ngIf="!mess">
+  <div class="spinner"></div>
+  <p>Loading mess details...</p>
 </div>

@@ -1,44 +1,71 @@
 <div class="history-page">
-
   <!-- Header -->
   <div class="page-header">
-    <h1>Delivery History</h1>
-
-    <input 
-      type="date"
-      [(ngModel)]="selectedDate"
-    />
-  </div>
-
-  <!-- Loading -->
-  <div *ngIf="isLoading" class="loading">
-    Loading history...
-  </div>
-
-  <!-- Cards -->
-  <div class="history-grid" *ngIf="!isLoading">
-
-    <div class="history-card" *ngFor="let d of filteredDeliveries">
-
-      <div class="card-header">
-        <h3>#{{d.orderId || d.id}}</h3>
-        <span class="status">Delivered</span>
-      </div>
-
-      <div class="card-body">
-        <p><strong>Customer:</strong> {{d.customerName}}</p>
-        <p><strong>Address:</strong> {{d.deliveryAddress}}</p>
-        <p><strong>Amount:</strong> ₹{{d.amount}}</p>
-        <p><strong>Date:</strong> {{d.orderDate | date:'medium'}}</p>
-      </div>
-
+    <div>
+      <h1 class="page-title">Delivery History</h1>
+      <p class="page-subtitle">Review your past completed deliveries</p>
     </div>
 
+    <div class="date-filter-wrapper">
+      <svg class="calendar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+      <input 
+        type="date"
+        [(ngModel)]="selectedDate"
+        class="date-input"
+        title="Filter by date"
+      />
+    </div>
   </div>
 
-  <!-- Empty -->
-  <div *ngIf="!isLoading && filteredDeliveries.length === 0" class="empty">
-    No deliveries found.
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading delivery history...</p>
   </div>
 
+  <!-- Grid -->
+  <div class="history-grid" *ngIf="!isLoading && filteredDeliveries.length > 0">
+    <div class="history-card" *ngFor="let d of filteredDeliveries">
+      
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="header-info">
+          <div class="icon-box">
+             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          </div>
+          <div>
+            <h3 class="order-id">#{{d.orderId || d.id}}</h3>
+            <span class="customer-name">{{d.customerName}}</span>
+          </div>
+        </div>
+        <span class="status-badge delivered">Delivered</span>
+      </div>
+
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="info-row">
+          <span class="info-label">Delivery Address</span>
+          <span class="info-value address-text">{{d.deliveryAddress}}</span>
+        </div>
+        
+        <div class="info-group">
+          <div class="info-row">
+            <span class="info-label">Amount</span>
+            <span class="info-value font-bold">₹{{d.amount}}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Date & Time</span>
+            <span class="info-value time-text">{{d.orderDate | date:'medium'}}</span>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && filteredDeliveries.length === 0" class="empty-state">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+    <p>No deliveries found for the selected date.</p>
+  </div>
 </div>

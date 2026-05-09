@@ -1,70 +1,135 @@
-<div class="dashboard">
-
+<div class="dashboard-container">
   <!-- Header -->
-  <div class="header">
-    <h1>Dashboard</h1>
-    <p>Overview of today's orders</p>
+  <header class="page-header">
+    <div>
+      <h1 class="page-title">Staff Dashboard</h1>
+      <p class="page-subtitle">Overview of today's delivery operations</p>
+    </div>
+    <div class="date-badge">
+      <svg class="date-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+      Today
+    </div>
+  </header>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading dashboard data...</p>
   </div>
 
-  <!-- Loading -->
-  <div *ngIf="isLoading" class="loading">
-    Loading dashboard...
-  </div>
-
-  <!-- Stats -->
-  <div class="stats-grid" *ngIf="!isLoading">
-
-    <div class="card total">
-      <h2>{{total}}</h2>
-      <p>Total Orders</p>
-    </div>
-
-    <div class="card pending">
-      <h2>{{pending}}</h2>
-      <p>Pending</p>
-    </div>
-
-    <div class="card preparing">
-      <h2>{{preparing}}</h2>
-      <p>Preparing</p>
-    </div>
-
-    <div class="card out">
-      <h2>{{outForDelivery}}</h2>
-      <p>Out for Delivery</p>
-    </div>
-
-    <div class="card delivered">
-      <h2>{{delivered}}</h2>
-      <p>Delivered</p>
-    </div>
-
-  </div>
-
-  <!-- Recent Orders -->
-  <div class="recent" *ngIf="!isLoading">
-
-    <h2>Recent Orders</h2>
-
-    <div class="recent-list">
-
-      <div class="recent-item" *ngFor="let order of orders | slice:0:5">
-
-        <div>
-          <strong>#{{order.id}}</strong>
-          <p>{{order.customerName}}</p>
-          <p>{{order.mealSlot}}</p>
-          <p>{{order.amount}}</p>
+  <!-- Content -->
+  <div *ngIf="!isLoading" class="dashboard-content">
+    
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <!-- Total -->
+      <div class="stat-card">
+        <div class="stat-icon-wrapper blue">
+           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
         </div>
-
-        <span class="status" [ngClass]="order.status">
-          {{order.status}}
-        </span>
-
+        <div class="stat-info">
+          <p class="stat-label">Total Orders</p>
+          <h3 class="stat-value">{{total}}</h3>
+        </div>
       </div>
 
+      <!-- Pending -->
+      <div class="stat-card">
+        <div class="stat-icon-wrapper orange">
+           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <div class="stat-info">
+          <p class="stat-label">Pending</p>
+          <h3 class="stat-value">{{pending}}</h3>
+        </div>
+      </div>
+
+      <!-- Preparing -->
+      <div class="stat-card">
+        <div class="stat-icon-wrapper yellow">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"></path></svg>
+        </div>
+        <div class="stat-info">
+          <p class="stat-label">Preparing</p>
+          <h3 class="stat-value">{{preparing}}</h3>
+        </div>
+      </div>
+
+      <!-- Out for Delivery -->
+      <div class="stat-card">
+        <div class="stat-icon-wrapper purple">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </div>
+        <div class="stat-info">
+          <p class="stat-label">Out for Delivery</p>
+          <h3 class="stat-value">{{outForDelivery}}</h3>
+        </div>
+      </div>
+
+      <!-- Delivered -->
+      <div class="stat-card">
+        <div class="stat-icon-wrapper green">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <div class="stat-info">
+          <p class="stat-label">Delivered</p>
+          <h3 class="stat-value">{{delivered}}</h3>
+        </div>
+      </div>
     </div>
 
-  </div>
+    <!-- Recent Orders Section -->
+    <div class="recent-section">
+      <div class="section-header">
+        <h2>Recent Orders</h2>
+        <a routerLink="/staff/orders" class="view-all-link">View All <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></a>
+      </div>
 
+      <div class="recent-list">
+        <div class="empty-state" *ngIf="orders.length === 0">
+          <p>No orders to display for today.</p>
+        </div>
+
+        <div class="order-card" *ngFor="let order of orders | slice:0:5">
+          <div class="order-id-group">
+            <div class="icon-box">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            </div>
+            <div>
+              <span class="order-id">#{{order.id}}</span>
+              <span class="customer-name">{{order.customerName}}</span>
+            </div>
+          </div>
+          
+          <div class="order-details">
+            <div class="detail-item">
+               <span class="detail-label">Meal Slot</span>
+               <span class="detail-value">{{order.mealSlot}}</span>
+            </div>
+            <div class="detail-item">
+               <span class="detail-label">Amount</span>
+               <span class="detail-value font-bold">₹{{order.amount}}</span>
+            </div>
+          </div>
+
+          <div class="order-status-wrap">
+            <span class="status-badge" 
+              [ngClass]="{
+                'status-pending': order.status === 1,
+                'status-preparing': order.status === 2,
+                'status-out': order.status === 3,
+                'status-delivered': order.status === 4
+              }">
+              {{ 
+                order.status === 1 ? 'Pending' : 
+                order.status === 2 ? 'Preparing' : 
+                order.status === 3 ? 'Out for Delivery' : 
+                order.status === 4 ? 'Delivered' : 'Unknown' 
+              }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
