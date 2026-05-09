@@ -22,6 +22,7 @@ const routes: Routes = [
       { path: 'owners', component: OwnerListComponent },
       { path: 'staff', component: StaffListComponent },
       { path: 'staff/:id', component: StaffDetailsComponent },
+      { path: 'staff/:messId/:staffId', component: StaffDetailsComponent },
       { path: 'orders', component: OrderListComponent },
       { path: 'users', component: UserListComponent },
       { path: 'mess/:id', component: MessDetailsComponent },

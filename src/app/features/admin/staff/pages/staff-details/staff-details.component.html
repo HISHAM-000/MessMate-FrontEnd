@@ -10,12 +10,38 @@
     No staff found for this mess
   </div>
 
+  <!-- 🔥 Staff List -->
   <div class="staff-list" *ngIf="!loading">
 
-    <div class="staff-card" *ngFor="let s of staff">
+    <div 
+      class="staff-card" 
+      *ngFor="let s of staff"
+      (click)="selectStaff(s)"
+    >
       <h3>{{ s.name }}</h3>
       <p>{{ s.email }}</p>
     </div>
+
+  </div>
+
+  <!-- 🔥 Staff Details -->
+  <div *ngIf="selectedStaff" class="details-card">
+
+    <button class="close-btn" (click)="clearSelection()">✖</button>
+
+    <h2>{{ selectedStaff.name }}</h2>
+
+    <p><strong>Email:</strong> {{ selectedStaff.email }}</p>
+    <p><strong>Phone:</strong> {{ selectedStaff.phoneNumber }}</p>
+    <p>
+      <strong>Status:</strong>
+      {{ selectedStaff.isActive ? 'Active' : 'Inactive' }}
+    </p>
+
+    <p>
+      <strong>Joined:</strong>
+      {{ selectedStaff.joinedOn | date:'mediumDate' }}
+    </p>
 
   </div>
 

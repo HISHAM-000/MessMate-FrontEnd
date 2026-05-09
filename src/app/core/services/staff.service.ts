@@ -7,16 +7,16 @@ import { environment } from 'src/environments/environment';
 })
 export class StaffService {
 
-  private baseUrl = `${environment.apiUrl}/Staff`;
+  private baseUrl = `${environment.apiUrl}/MessStaff`;
 
   constructor(private http: HttpClient) {}
 
   // 🔥 Get staff by mess
   getStaffByMess(messId: number) {
-    return this.http.get(`${this.baseUrl}/get-staff`, {
-      params: { messId: messId },
-      withCredentials: true
-    });
-  }
-  
+  return this.http.get(`${this.baseUrl}/get-staff`, {
+    params: { messId: messId },
+    withCredentials: true
+  });
+}
+
 }
