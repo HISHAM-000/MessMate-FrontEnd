@@ -1,11 +1,11 @@
 <div class="admin-layout">
-  <app-sidebar></app-sidebar>
+  <app-sidebar [isCollapsed]="isSidebarCollapsed"></app-sidebar>
 
   <div class="main">
-    <app-header></app-header>
+    <app-header (toggleSidebar)="toggleSidebar()"></app-header>
 
     <div class="content">
-      <router-outlet></router-outlet> <!-- 🔥 Pages render here -->
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

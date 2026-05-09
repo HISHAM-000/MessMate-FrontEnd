@@ -1,102 +1,118 @@
-<div class="dashboard">
+<div class="dashboard-container">
 
-  <h1 class="title">Dashboard</h1>
-
-  <!-- 🔥 Stats Cards -->
-  <div class="cards">
-
-  <!-- 🔥 Pending Mess (Highlighted) -->
-  <div class="card highlight">
-    <div class="card-top">
-      <p>Pending Mess</p>
-      <span class="icon">⏳</span>
+  <!-- Header Section -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1 class="dashboard-title">System <span class="accent">Overview</span></h1>
+      <p class="dashboard-subtitle">Real-time platform metrics and management</p>
     </div>
-    <h2 *ngIf="!loading">{{ pendingMessCount }}</h2>
-<h2 *ngIf="loading">--</h2>
-    <span class="hint">Needs approval →</span>
+    <div class="header-actions">
+      <button class="refresh-btn" (click)="loadDashboard()" [class.spinning]="loading">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        <span>Refresh Data</span>
+      </button>
+    </div>
   </div>
 
-  <!-- Active Mess -->
-  <div class="card">
-    <div class="card-top">
-      <p>Active Mess</p>
-      <span class="icon">🏪</span>
+  <!-- 📊 Stats Grid -->
+  <div class="stats-grid">
+    
+    <!-- Pending Mess Card -->
+    <div class="stat-card reveal-item" style="--delay: 0.1s" routerLink="/admin/mess/pending">
+      <div class="card-glow violet"></div>
+      <div class="stat-icon-box violet">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <div class="stat-info">
+        <p class="stat-label">Pending Applications</p>
+        <h2 class="stat-value" *ngIf="!loading">{{ pendingMessCount }}</h2>
+        <div class="skeleton-value" *ngIf="loading"></div>
+        <span class="stat-hint warning">Requires Attention</span>
+      </div>
     </div>
-    <h2 *ngIf="!loading">{{ activeMessCount }}</h2>
-<h2 *ngIf="loading">--</h2>
-    <span class="hint">View approved →</span>
+
+    <!-- Active Mess Card -->
+    <div class="stat-card reveal-item" style="--delay: 0.2s" routerLink="/admin/mess/approved">
+      <div class="card-glow indigo"></div>
+      <div class="stat-icon-box indigo">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+      </div>
+      <div class="stat-info">
+        <p class="stat-label">Active Messes</p>
+        <h2 class="stat-value" *ngIf="!loading">{{ activeMessCount }}</h2>
+        <div class="skeleton-value" *ngIf="loading"></div>
+        <span class="stat-hint success">Live on platform</span>
+      </div>
+    </div>
+
+    <!-- Total Staff Card -->
+    <div class="stat-card reveal-item" style="--delay: 0.3s" routerLink="/admin/staff">
+      <div class="card-glow purple"></div>
+      <div class="stat-icon-box purple">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </div>
+      <div class="stat-info">
+        <p class="stat-label">Total Staff</p>
+        <h2 class="stat-value">24</h2>
+        <span class="stat-hint info">Platform wide</span>
+      </div>
+    </div>
+
+    <!-- Today's Orders Card -->
+    <div class="stat-card reveal-item" style="--delay: 0.4s" routerLink="/admin/orders">
+      <div class="card-glow blue"></div>
+      <div class="stat-icon-box blue">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+      </div>
+      <div class="stat-info">
+        <p class="stat-label">Daily Orders</p>
+        <h2 class="stat-value">1,248</h2>
+        <span class="stat-hint secondary">+12.5% increase</span>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Staff -->
-  <!-- <div class="card">
-    <div class="card-top">
-      <p>Total Staff</p>
-      <span class="icon">🧑‍🍳</span>
-    </div>
-    <h2>28</h2>
-    <span class="hint">Manage staff →</span>
-  </div> -->
-
-  <!-- Orders -->
-  <div class="card">
-    <div class="card-top">
-      <p>Orders Today</p>
-      <span class="icon">📦</span>
-    </div>
-    <h2>320</h2>
-    <span class="hint">Track orders →</span>
-  </div>
-
-</div>
-
-  <!-- 🔥 Quick Actions -->
-  <div class="quick-actions">
-
-    <h2>Quick Actions</h2>
-
-    <div class="actions">
-      <div class="action-card" routerLink="/admin/mess/pending">
-        Review Pending Mess
+  <div class="dashboard-content-grid">
+    
+    <!-- ⚡ Quick Management Section -->
+    <div class="panel reveal-item" style="--delay: 0.5s">
+      <div class="panel-header">
+        <h2 class="panel-title">Quick Actions</h2>
+        <p class="panel-subtitle">Immediate management tasks</p>
       </div>
-
-      <div class="action-card" routerLink="/admin/orders">
-        View Orders
-      </div>
-
-      <div class="action-card" routerLink="/admin/users">
-        Manage Users
+      <div class="panel-body">
+        <div class="actions-list">
+          <button class="action-btn" *ngFor="let action of quickActions" [routerLink]="action.link">
+            <div class="action-icon" [ngClass]="action.color">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="action.icon"></path>
+              </svg>
+            </div>
+            <span>{{ action.label }}</span>
+          </button>
+        </div>
       </div>
     </div>
 
-  </div>
-
-  <!-- 🔥 Activity -->
-  <div class="section">
-
-    <h2>Recent Activity</h2>
-
-    <div class="activity-list">
-
-      <div class="activity">
-        <p><strong>New Mess Registered</strong></p>
-        <span>2 mins ago</span>
+    <!-- 🕓 Recent Activity Section -->
+    <div class="panel reveal-item" style="--delay: 0.6s">
+      <div class="panel-header">
+        <h2 class="panel-title">Recent Activity</h2>
+        <p class="panel-subtitle">Platform logs and events</p>
       </div>
-
-      <div class="activity">
-        <p><strong>Order #123 Delivered</strong></p>
-        <span>10 mins ago</span>
+      <div class="panel-body">
+        <div class="activity-timeline">
+          <div class="activity-item clickable" *ngFor="let activity of recentActivities" [routerLink]="activity.link">
+            <div class="activity-dot" [ngClass]="activity.color"></div>
+            <div class="activity-content">
+              <p class="activity-text"><strong>{{ activity.title }}</strong> {{ activity.desc }}</p>
+              <span class="activity-time">{{ activity.time }}</span>
+            </div>
+          </div>
+        </div>
+        <button class="view-all-btn">View All Logs</button>
       </div>
-
-      <div class="activity">
-        <p><strong>User Blocked</strong></p>
-        <span>30 mins ago</span>
-      </div>
-
-      <div class="activity">
-        <p><strong>Mess Approved</strong></p>
-        <span>1 hour ago</span>
-      </div>
-
     </div>
 
   </div>

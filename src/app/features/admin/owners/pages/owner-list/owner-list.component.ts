@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicationService } from 'src/app/core/services/application.service';
+import { MessService } from 'src/app/core/services/mess.service';
 
 @Component({
   selector: 'app-owner-list',
@@ -9,6 +10,7 @@ import { ApplicationService } from 'src/app/core/services/application.service';
 export class OwnerListComponent implements OnInit {
 
   owners: any[] = [];
+  selectedOwner: any = null;
   loading = true;
 
   // 🔥 modal
@@ -16,23 +18,41 @@ export class OwnerListComponent implements OnInit {
   selectedOwnerId: number | null = null;
   rejectReason = '';
 
-  constructor(private applicationService: ApplicationService) {}
+  constructor(
+    private applicationService: ApplicationService,
+    private messService: MessService
+  ) {}
 
   ngOnInit(): void {
     this.loadOwners();
   }
 
   loadOwners() {
-    this.applicationService.getPendingMesses().subscribe({
+    this.loading = true;
+    this.messService.getAllMess().subscribe({
       next: (res: any) => {
-        this.owners = res.data || [];
+        const rawData = res.data || res || [];
+        this.owners = rawData.map((m: any) => ({
+          ...m,
+          messName: m.name || m.messName // Handle both property names
+        }));
+        
         this.loading = false;
+        
+        // Auto-select first one if available
+        if (this.owners.length > 0) {
+          this.selectedOwner = this.owners[0];
+        }
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error(err);
         this.loading = false;
       }
     });
+  }
+
+  selectOwner(owner: any) {
+    this.selectedOwner = owner;
   }
 
   // 🔥 Open modal
@@ -67,7 +87,7 @@ export class OwnerListComponent implements OnInit {
 
           this.closeModal();
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error(err);
         }
       });

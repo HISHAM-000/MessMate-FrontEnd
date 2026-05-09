@@ -1,15 +1,89 @@
-<div class="sidebar">
-  <h2>MessMate</h2>
+<aside class="sidebar" [class.collapsed]="isCollapsed">
 
-  <a routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
+  <!-- Brand -->
+  <div class="brand">
+    <div class="brand-logo">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+    </div>
+    <div class="brand-text" *ngIf="!isCollapsed">
+      <h2>MessMate</h2>
+      <p>Admin Control</p>
+    </div>
+  </div>
 
-  <p class="section">Mess</p>
-  <a routerLink="/admin/mess/pending" routerLinkActive="active">Pending</a>
-  <a routerLink="/admin/mess/approved" routerLinkActive="active">Approved</a>
+  <!-- Navigation -->
+  <nav class="nav-menu">
 
-  <p class="section">Management</p>
-  <a routerLink="/admin/owners" routerLinkActive="active">Owners</a>
-  <a routerLink="/admin/staff" routerLinkActive="active">Staff</a>
-  <a routerLink="/admin/orders" routerLinkActive="active">Orders</a>
-  <!-- <a routerLink="/admin/users" routerLinkActive="active">Users</a> -->
-</div>
+    <p class="nav-section" *ngIf="!isCollapsed">MAIN</p>
+
+    <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-item" [title]="isCollapsed ? 'Dashboard' : ''">
+      <span class="nav-icon">
+        <svg width="19" height="19" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      </span>
+      <span class="nav-label" *ngIf="!isCollapsed">Dashboard</span>
+    </a>
+
+    <p class="nav-section" *ngIf="!isCollapsed">MESS</p>
+
+    <a routerLink="/admin/mess/pending" routerLinkActive="active" class="nav-item" [title]="isCollapsed ? 'Pending' : ''">
+      <span class="nav-icon">
+        <svg width="19" height="19" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </span>
+      <span class="nav-label" *ngIf="!isCollapsed">Pending</span>
+    </a>
+
+    <a routerLink="/admin/mess/approved" routerLinkActive="active" class="nav-item" [title]="isCollapsed ? 'Approved' : ''">
+      <span class="nav-icon">
+        <svg width="19" height="19" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </span>
+      <span class="nav-label" *ngIf="!isCollapsed">Approved</span>
+    </a>
+
+    <p class="nav-section" *ngIf="!isCollapsed">MANAGEMENT</p>
+
+    <a routerLink="/admin/owners" routerLinkActive="active" class="nav-item" [title]="isCollapsed ? 'Owners' : ''">
+      <span class="nav-icon">
+        <svg width="19" height="19" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21v-2a4 4 0 00-4-4H9a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/></svg>
+      </span>
+      <span class="nav-label" *ngIf="!isCollapsed">Owners</span>
+    </a>
+
+    <a routerLink="/admin/staff" routerLinkActive="active" class="nav-item" [title]="isCollapsed ? 'Staff' : ''">
+      <span class="nav-icon">
+        <svg width="19" height="19" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </span>
+      <span class="nav-label" *ngIf="!isCollapsed">Staff</span>
+    </a>
+
+    <a routerLink="/admin/orders" routerLinkActive="active" class="nav-item" [title]="isCollapsed ? 'Orders' : ''">
+      <span class="nav-icon">
+        <svg width="19" height="19" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+      </span>
+      <span class="nav-label" *ngIf="!isCollapsed">Orders</span>
+    </a>
+
+  </nav>
+
+  <!-- Footer: Admin chip + Logout -->
+  <div class="sidebar-footer">
+
+    <!-- Admin chip (full only) -->
+    <div class="admin-chip" *ngIf="!isCollapsed">
+      <div class="admin-avatar">A</div>
+      <div class="admin-info">
+        <span class="admin-name">Administrator</span>
+        <span class="admin-role">Super Admin</span>
+      </div>
+    </div>
+
+    <!-- Logout button -->
+    <button class="logout-btn" (click)="logout()" [title]="isCollapsed ? 'Logout' : ''">
+      <span class="nav-icon">
+        <svg width="19" height="19" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      </span>
+      <span class="logout-label" *ngIf="!isCollapsed">Logout</span>
+    </button>
+
+  </div>
+
+</aside>
