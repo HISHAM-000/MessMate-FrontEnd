@@ -18,3 +18,64 @@
   border: none;
   color: #2563eb;
 }
+
+
+.staff-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.staff-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.staff-card:hover {
+  transform: translateY(-5px);
+}
+
+.details-card {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 10px;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.back-btn {
+  margin-bottom: 15px;
+  border: none;
+  background: none;
+  color: #2563eb;
+  cursor: pointer;
+}
+.details-card {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 10px;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+}

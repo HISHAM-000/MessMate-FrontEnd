@@ -13,6 +13,9 @@ export class StaffDetailsComponent implements OnInit {
   messId!: number;
   loading = true;
 
+  // 🔥 NEW
+  selectedStaff: any = null;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -25,16 +28,30 @@ export class StaffDetailsComponent implements OnInit {
   }
 
   loadStaff() {
+    this.loading = true;
+
     this.staffService.getStaffByMess(this.messId).subscribe({
       next: (res: any) => {
+        console.log('STAFF RESPONSE:', res);
+
         this.staff = res.data || [];
         this.loading = false;
       },
       error: (err) => {
-        console.error(err);
+        console.error('Staff error:', err);
         this.loading = false;
       }
     });
+  }
+
+  // 🔥 NEW: select staff
+  selectStaff(staff: any) {
+    this.selectedStaff = staff;
+  }
+
+  // 🔥 NEW: clear selection
+  clearSelection() {
+    this.selectedStaff = null;
   }
 
   goBack() {
